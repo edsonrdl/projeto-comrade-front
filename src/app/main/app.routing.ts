@@ -31,6 +31,13 @@ const routes: Routes = [
       import('../view/pages/system-user/system-user.module').then((m) => m.SystemUserModule),
     canActivate: [AuthGuard],
   },
+  
+  {
+    path: 'financial-information',
+    loadChildren: () =>
+      import('../view/pages/financial-information/financial-information.module').then((m) => m.FinancialInformationModule),
+    canActivate: [AuthGuard],
+  },
   {
     path: 'login-form',
     component: LoginFormComponent,

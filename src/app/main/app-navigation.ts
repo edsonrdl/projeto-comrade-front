@@ -28,4 +28,15 @@ export const navigation = [
       },
     ],
   },
+  {
+    text: 'Dados', //Muda esse nome aqui
+    icon: 'folder',
+    items: [
+      {
+        text: 'Financial Information',
+        path: '/financial-information',
+      },
+    ],
+  },
+
 ];
