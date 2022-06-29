@@ -22,20 +22,26 @@ export class FinancialInformationWebRepository extends FinancialInformationRepos
     super();
   }
 
-  getFinancialInformationById(id: number): Observable<SingleResultModel<FinancialInformationModel>> {
+  getFinancialInformationById(
+    id: string
+  ): Observable<SingleResultModel<FinancialInformationModel>> {
     PageResultModel;
     return this.http
       .get<SingleResultModel<FinancialInformationWebEntity>>(
-        `${environment.SYSTEMUSER}financial-information/get-by-id`,
+        `${environment.FINANCIALINFORMATION}financial-information/get-by-id`,
         id
       )
       .pipe(map((x) => this.mapper.responseWebMapFrom(x.data)));
   }
 
-  getAllFinancialInformation(filter: PageFilterModel): Observable<PageResultModel<FinancialInformationModel>> {
+  getAllFinancialInformation(
+    filter: PageFilterModel
+  ): Observable<PageResultModel<FinancialInformationModel>> {
     var request = this.http
       .getAll<PageResultModel<FinancialInformationWebEntity>>(
-        `${environment.SYSTEMUSER}financial-information/get-all${makeParamFilterGrid(filter)}`
+        `${environment.FINANCIALINFORMATION}financial-information/get-all${makeParamFilterGrid(
+          filter
+        )}`
       )
       .pipe(
         map((x) => {
@@ -48,21 +54,33 @@ export class FinancialInformationWebRepository extends FinancialInformationRepos
   postFinancialInformation(param: FinancialInformationModel) {
     return this.http
       .post<FinancialInformationWebEntity>(
-        `${environment.SYSTEMUSER}financial-information/create`,
+        `${environment.FINANCIALINFORMATION}financial-information/create`,
         this.mapper.mapTo(param)
       )
       .pipe(map((x) => this.mapper.mapFrom(x.data)));
   }
+  postListFinancialInformation(param: FinancialInformationModel[]) {
+    return this.http
+      .post<FinancialInformationWebEntity[]>(
+        `${environment.FINANCIALINFORMATION}financial-information/create-many`,
+        param.map((x) => this.mapper.mapTo(x))
+        //param.map(this.mapper.mapTo)
+      )
+      .pipe(map((x) => x.data.map((entity) => this.mapper.mapFrom(entity))));
+  }
 
   putFinancialInformation(param: FinancialInformationModel) {
     return this.http
-      .put<void>(`${environment.SYSTEMUSER}financial-information/edit`, this.mapper.mapTo(param))
+      .put<void>(
+        `${environment.FINANCIALINFORMATION}financial-information/edit`,
+        this.mapper.mapTo(param)
+      )
       .pipe(map((x) => x.data));
   }
 
-  deleteFinancialInformation(id: number): Observable<void> {
+  deleteFinancialInformation(id: string): Observable<void> {
     return this.http
-      .delete<void>(`${environment.SYSTEMUSER}financial-information/delete/${id}`, id)
+      .delete<void>(`${environment.FINANCIALINFORMATION}financial-information/delete/${id}`, id)
       .pipe(map((x) => x.data));
   }
 }
