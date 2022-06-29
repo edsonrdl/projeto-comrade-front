@@ -9,11 +9,11 @@ import { SingleResultModel } from '../../utils/responses/single-result.model';
   providedIn: 'root',
 })
 export class GetFinancialInformationByIdUsecase
-  implements UseCase<number, SingleResultModel<FinancialInformationModel>>
+  implements UseCase<string, SingleResultModel<FinancialInformationModel>>
 {
   constructor(private financialInformationRepository: FinancialInformationRepository) {}
 
-  execute(id: number): Observable<SingleResultModel<FinancialInformationModel>> {
+  execute(id: string): Observable<SingleResultModel<FinancialInformationModel>> {
     return this.financialInformationRepository.getFinancialInformationById(id);
   }
 }

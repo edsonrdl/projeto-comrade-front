@@ -7,7 +7,9 @@ import { FinancialInformationRepository } from '../../repositories/financial-inf
 @Injectable({
   providedIn: 'root',
 })
-export class PostFinancialInformationUsecase implements UseCase<FinancialInformationModel, FinancialInformationModel> {
+export class PostFinancialInformationUsecase
+  implements UseCase<FinancialInformationModel, FinancialInformationModel>
+{
   constructor(private financialInformationRepository: FinancialInformationRepository) {}
 
   execute(params: FinancialInformationModel): Observable<FinancialInformationModel> {
