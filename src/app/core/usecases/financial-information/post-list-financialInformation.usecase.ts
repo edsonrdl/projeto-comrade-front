@@ -8,11 +8,11 @@ import { FinancialInformationRepository } from '../../repositories/financial-inf
   providedIn: 'root',
 })
 export class PostListFinancialInformationUsecase
-  implements UseCase<ListFinancialInformationModel[], ListFinancialInformationModel[]>
+  implements UseCase<ListFinancialInformationModel, ListFinancialInformationModel>
 {
   constructor(private financialInformationRepository: FinancialInformationRepository) {}
 
-  execute(params: ListFinancialInformationModel[]): Observable<ListFinancialInformationModel[]> {
+  execute(params: ListFinancialInformationModel): Observable<ListFinancialInformationModel> {
     return this.financialInformationRepository.postListFinancialInformation(params);
   }
 }
