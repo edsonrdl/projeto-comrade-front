@@ -40,17 +40,19 @@ export class FinancialInformationComponent implements OnInit {
     let fileReader = new FileReader();
 
     fileReader.onloadend = (e) => {
-      const listaarray = [fileReader.result];
-      const listastring = listaarray.toString();
-      var listaFinan = listastring?.split('\n');
+      const informations = [fileReader.result];
+      const informationString = informations.toString();
+      var informationStrings = informationString?.split('\n');
       let i = 0;
-      let listafinancilinformation: FinancialInformationModel[] = [];
-      for (i = 0; i < listaFinan.length; i++) {
-        let financialInformation = this.toFinancialInformation(listaFinan[i]);
-        listafinancilinformation.push(financialInformation);
+      let financilinformationModels: FinancialInformationModel[] = [];
+      for (i = 0; i < informationStrings.length; i++) {
+        let financialInformation = this.toFinancialInformation(informationStrings[i]);
+        financilinformationModels.push(financialInformation);
       }
-
-      console.log(listafinancilinformation);
+      let listFinancialInformationModel: ListFinancialInformationModel = {
+        financialInformations: financilinformationModels,
+      };
+      this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
     };
     fileReader.readAsText(file);
   }
@@ -60,7 +62,7 @@ export class FinancialInformationComponent implements OnInit {
       type: item.slice(0, 1),
       date: item.slice(1, 9),
       value: item.slice(9, 19),
-      cPF: item.slice(19, 30),
+      cpf: item.slice(19, 30),
       card: item.slice(30, 42),
       hour: item.slice(42, 48),
       shop: item.slice(48, 62),
@@ -84,7 +86,7 @@ export class FinancialInformationComponent implements OnInit {
       hour: '153453',
       shop: 'JOÃO MACEDO',
       store: 'BAR DO JOÃO',
-      cPF: '3456345636',
+      cpf: '3456345636',
     };
 
     this.postFinancialInformationUsecase
@@ -93,35 +95,34 @@ export class FinancialInformationComponent implements OnInit {
         console.log(model);
       });
   }
-  createlist(): void {
-    let financialInformation: ListFinancialInformationModel = {
-      type: '3',
+  createMany(): void {
+    let financialInformation: FinancialInformationModel = {
+      type: '8',
       date: '201901',
       value: '00000',
       card: '4753',
       hour: '153453',
       shop: 'JOÃO MACEDO',
       store: 'BAR DO JOÃO',
-      cPF: '3456345636',
+      cpf: '3456345636',
     };
-
-    this.postListFinancialInformationUsecase
-      .execute([financialInformation])
-      .subscribe((model: FinancialInformationModel[]) => {
-        console.log(model);
-      });
+    let listFinancialInformationModel: ListFinancialInformationModel = {
+      financialInformations: [financialInformation],
+    };
+    console.log(listFinancialInformationModel);
+    this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
   }
   edit(): void {
     let financialInformation: FinancialInformationModel = {
-      id: 'c16f9c38-481c-43da-a432-89aa582549dd',
-      type: '6',
+      id: 'b3b65b61-ab6e-4cac-b744-d26162525feb',
+      type: '9',
       date: '201901',
       value: '00000',
       card: '4753',
       hour: '153453',
       shop: 'JOÃO MACEDO',
       store: 'BAR DO JOÃO',
-      cPF: '3456345636',
+      cpf: '3456345636',
     };
     this.putFinancialInformationUsecase.execute(financialInformation).subscribe(() => {
       console.log(financialInformation);
@@ -136,9 +137,9 @@ export class FinancialInformationComponent implements OnInit {
   }
   delete(): void {
     this.deleteFinancialInformationUsercase
-      .execute('c16f9c38-481c-43da-a432-89aa582549dd')
+      .execute('0fdce636-19fe-4063-889b-3c8e86dbc21a')
       .subscribe(() => {
-        console.log('c16f9c38-481c-43da-a432-89aa582549dd');
+        console.log('0fdce636-19fe-4063-889b-3c8e86dbc21a');
       });
   }
 }
