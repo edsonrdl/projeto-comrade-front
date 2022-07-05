@@ -9,8 +9,8 @@ import { SingleResultModel } from '../utils/responses/single-result.model';
 
 export abstract class FinancialInformationRepository {
   abstract postListFinancialInformation(
-    param: ListFinancialInformationModel[]
-  ): Observable<FinancialInformationModel[]>;
+    param: ListFinancialInformationModel
+  ): Observable<ListFinancialInformationModel>;
   abstract getFinancialInformationById(
     id: string
   ): Observable<SingleResultModel<FinancialInformationModel>>;
