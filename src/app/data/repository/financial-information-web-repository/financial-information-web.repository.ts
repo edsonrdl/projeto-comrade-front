@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FinancialInformationWebRepositoryMapper as FinancialInformationWebRepositoryMapper } from './financial-information-web-repository-mapper';
-import { FinancialInformationWebEntity } from './financial-information-web-entity';
+import {
+  FinancialInformationWebEntity,
+  ListFinancialInformationWebEntity,
+} from './financial-information-web-entity';
 import { map } from 'rxjs/operators';
 import { BaseHttpService } from 'src/app/services/http/base-http.service';
 import { environment } from 'src/environments/environment';
 import { FinancialInformationRepository } from 'src/app/core/repositories/financial-information.repository';
-import { FinancialInformationModel } from 'src/app/core/models/financial-information.model';
+import {
+  FinancialInformationModel,
+  ListFinancialInformationModel,
+} from 'src/app/core/models/financial-information.model';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
 import { PageFilterModel } from 'src/app/core/utils/filters/page-filter.model';
 import { makeParamFilterGrid } from '../../helper.repository';
 import { SingleResultModel } from '../../../core/utils/responses/single-result.model';
+import { FinancialInformationListWebRepositoryMapper } from './financial-information-list-web-repository-mapper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FinancialInformationWebRepository extends FinancialInformationRepository {
   mapper = new FinancialInformationWebRepositoryMapper();
+  mapperList = new FinancialInformationListWebRepositoryMapper();
 
   constructor(public http: BaseHttpService) {
     super();
@@ -59,14 +67,14 @@ export class FinancialInformationWebRepository extends FinancialInformationRepos
       )
       .pipe(map((x) => this.mapper.mapFrom(x.data)));
   }
-  postListFinancialInformation(param: FinancialInformationModel[]) {
+  postListFinancialInformation(param: ListFinancialInformationModel) {
     return this.http
-      .post<FinancialInformationWebEntity[]>(
+      .post<ListFinancialInformationWebEntity>(
         `${environment.FINANCIALINFORMATION}financial-information/create-many`,
-        param.map((x) => this.mapper.mapTo(x))
+        this.mapperList.mapTo(param)
         //param.map(this.mapper.mapTo)
       )
-      .pipe(map((x) => x.data.map((entity) => this.mapper.mapFrom(entity))));
+      .pipe(map((x) => this.mapperList.mapFrom(x.data)));
   }
 
   putFinancialInformation(param: FinancialInformationModel) {
