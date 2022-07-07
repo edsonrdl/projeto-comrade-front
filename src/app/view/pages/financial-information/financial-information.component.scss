@@ -1,9 +1,13 @@
 ::ng-deep #data-grid-demo {
   min-height: 530px;
 }
-
-
+.upload-Financial {
+  margin-top: 6px;
+}
 
 .file-input {
   display: none;
+}
+.upload-btn {
+  border-radius: 9px;
 }
