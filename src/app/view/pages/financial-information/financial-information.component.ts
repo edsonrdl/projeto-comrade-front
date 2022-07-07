@@ -19,7 +19,7 @@ import { PostListFinancialInformationUsecase } from 'src/app/core/usecases/finan
   providers: [],
 })
 export class FinancialInformationComponent implements OnInit {
-  dataSource!: FinancialInformationModel[];
+  dataSource: FinancialInformationModel[] = [];
   fileName!: String;
 
   constructor(
@@ -44,13 +44,13 @@ export class FinancialInformationComponent implements OnInit {
       const informationString = informations.toString();
       var informationStrings = informationString?.split('\n');
       let i = 0;
-      let financilinformationModels: FinancialInformationModel[] = [];
       for (i = 0; i < informationStrings.length; i++) {
         let financialInformation = this.toFinancialInformation(informationStrings[i]);
-        financilinformationModels.push(financialInformation);
+        console.log(financialInformation);
+        this.dataSource.push(financialInformation);
       }
       let listFinancialInformationModel: ListFinancialInformationModel = {
-        financialInformations: financilinformationModels,
+        financialInformations: this.dataSource,
       };
       this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
     };
