@@ -1,21 +1,56 @@
-<input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+<div class="upload-Financial">
+  <div>
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="getAll()">GetAll</button>
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="getById()">GetById</button>
 
-<div class="file-upload">
-  {{ fileName || 'No file uploaded yet.' }}
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="create()">Create</button>
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="createMany()">
+      CreateMany
+    </button>
 
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
-    Upload
-  </button>
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="edit()">Edit</button>
+
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="delete()">Delete</button>
+  </div>
 </div>
+<div id="data-grid-demo">
+  <dx-data-grid id="gridContainer" [dataSource]="dataSource" keyExpr="id" [showBorders]="true">
+    <dxo-editing mode="popup" [allowUpdating]="true" [allowAdding]="true" [allowDeleting]="true">
+      <dxo-popup title="Employee Info" [showTitle]="true" [width]="700" [height]="525"> </dxo-popup>
+      <dxo-form>
+        <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
+          <dxi-item dataField="type"></dxi-item>
+          <dxi-item dataField="date"></dxi-item>
+          <dxi-item dataField="value"></dxi-item>
+          <dxi-item dataField="cpf"></dxi-item>
+          <dxi-item dataField="card"></dxi-item>
+          <dxi-item dataField="hour"></dxi-item>
+          <dxi-item dataField="shop"></dxi-item>
+          <dxi-item dataField="store"></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+    <dxo-paging [enabled]="true"></dxo-paging>
+    <dxo-toolbar>
+      <dxi-item name="addRowButton"> </dxi-item>
+      <dxi-item>
+        <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+        <div class="file-upload">
+          {{ fileName || 'No file uploaded yet.' }}
+          <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+            Upload
+          </button>
+        </div>
+      </dxi-item>
+    </dxo-toolbar>
 
-<div>
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="getAll()">GetAll</button>
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="getById()">GetById</button>
-
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="create()">Create</button>
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="createMany()">CreateMany</button>
-
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="edit()">Edit</button>
-
-  <button mat-mini-fab color="primary" class="upload-btn" (click)="delete()">Delete</button>
+    <dxi-column dataField="type"></dxi-column>
+    <dxi-column dataField="date"></dxi-column>
+    <dxi-column dataField="value"></dxi-column>
+    <dxi-column dataField="cpf"></dxi-column>
+    <dxi-column dataField="card"></dxi-column>
+    <dxi-column dataField="hour"></dxi-column>
+    <dxi-column dataField="shop"></dxi-column>
+    <dxi-column dataField="store"></dxi-column>
+  </dx-data-grid>
 </div>
