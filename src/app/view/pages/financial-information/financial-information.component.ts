@@ -11,7 +11,8 @@ import { GetFinancialInformationByIdUsecase } from 'src/app/core/usecases/financ
 import { PutFinancialInformationUsecase } from 'src/app/core/usecases/financial-information/put-financialInformation.usecase';
 import { SingleResultModel } from 'src/app/core/utils/responses/single-result.model';
 import { PostListFinancialInformationUsecase } from 'src/app/core/usecases/financial-information/post-list-financialInformation.usecase';
-
+import CustomStore from 'devextreme/data/custom_store';
+import { PageFilterModel } from 'src/app/core/utils/filters/page-filter.model';
 @Component({
   selector: 'app-financial-information',
   templateUrl: 'financial-information.component.html',
@@ -31,7 +32,9 @@ export class FinancialInformationComponent implements OnInit {
     private putFinancialInformationUsecase: PutFinancialInformationUsecase
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAll();
+  }
 
   onFileSelected(event: any) {
     console.log('entrou na onFileSelected');
@@ -46,11 +49,10 @@ export class FinancialInformationComponent implements OnInit {
       let i = 0;
       for (i = 0; i < informationStrings.length; i++) {
         let financialInformation = this.toFinancialInformation(informationStrings[i]);
-        console.log(financialInformation);
-        this.dataSource.push(financialInformation);
+        this.dataSource?.push(financialInformation);
       }
       let listFinancialInformationModel: ListFinancialInformationModel = {
-        financialInformations: this.dataSource,
+        financialInformations: this.dataSource!,
       };
       this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
     };
@@ -74,72 +76,48 @@ export class FinancialInformationComponent implements OnInit {
     this.getAllFinancialInformationUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<FinancialInformationModel>) => {
-        console.log(grid.data);
+        this.dataSource = grid.data ?? [];
       });
-  }
-  create(): void {
-    let financialInformation: FinancialInformationModel = {
-      type: '3',
-      date: '201901',
-      value: '00000',
-      card: '4753',
-      hour: '153453',
-      shop: 'JOÃO MACEDO',
-      store: 'BAR DO JOÃO',
-      cpf: '3456345636',
-    };
-
-    this.postFinancialInformationUsecase
-      .execute(financialInformation)
-      .subscribe((model: FinancialInformationModel) => {
-        console.log(model);
-      });
-  }
-  createMany(): void {
-    let financialInformation: FinancialInformationModel = {
-      type: '8',
-      date: '201901',
-      value: '00000',
-      card: '4753',
-      hour: '153453',
-      shop: 'JOÃO MACEDO',
-      store: 'BAR DO JOÃO',
-      cpf: '3456345636',
-    };
-    let listFinancialInformationModel: ListFinancialInformationModel = {
-      financialInformations: [financialInformation],
-    };
-    console.log(listFinancialInformationModel);
-    this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
-  }
-  edit(): void {
-    let financialInformation: FinancialInformationModel = {
-      id: 'b3b65b61-ab6e-4cac-b744-d26162525feb',
-      type: '9',
-      date: '201901',
-      value: '00000',
-      card: '4753',
-      hour: '153453',
-      shop: 'JOÃO MACEDO',
-      store: 'BAR DO JOÃO',
-      cpf: '3456345636',
-    };
-    this.putFinancialInformationUsecase.execute(financialInformation).subscribe(() => {
-      console.log(financialInformation);
-    });
   }
   getById(): void {
     this.getFinancialInformationByIdUsecase
-      .execute('c16f9c38-481c-43da-a432-89aa582549dd')
+      .execute('id')
       .subscribe((model: SingleResultModel<FinancialInformationModel>) => {
         console.log(model);
       });
   }
-  delete(): void {
-    this.deleteFinancialInformationUsercase
-      .execute('0fdce636-19fe-4063-889b-3c8e86dbc21a')
-      .subscribe(() => {
-        console.log('0fdce636-19fe-4063-889b-3c8e86dbc21a');
-      });
+  create(e: any): void {
+    console.log(e);
+    const model = e.data as FinancialInformationModel;
+    this.postFinancialInformationUsecase.execute(model).subscribe();
+    console.log(model);
+  }
+  createMany(e: any): void {
+    console.log(e);
+    let financialInformation: FinancialInformationModel = {
+      type: '',
+      date: '',
+      value: '',
+      card: '',
+      hour: '',
+      shop: ' ',
+      store: '  ',
+      cpf: '',
+    };
+
+    let listFinancialInformationModel: ListFinancialInformationModel = {
+      financialInformations: [financialInformation],
+    };
+    this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
+  }
+  edit(e: any): void {
+    const model = { ...e.oldData, ...e.newData } as FinancialInformationModel;
+    this.putFinancialInformationUsecase.execute(model).subscribe();
+  }
+  delete(e: any): void {
+    const model = e.data as FinancialInformationModel;
+    if (model.id) {
+      this.deleteFinancialInformationUsercase.execute(model.id).subscribe();
+    }
   }
 }

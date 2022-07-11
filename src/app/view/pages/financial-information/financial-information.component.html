@@ -1,6 +1,6 @@
 <div class="upload-Financial">
   <div>
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="getAll()">GetAll</button>
+    <!-- <button mat-mini-fab color="primary" class="upload-btn" (click)="getAll()">GetAll</button>
     <button mat-mini-fab color="primary" class="upload-btn" (click)="getById()">GetById</button>
 
     <button mat-mini-fab color="primary" class="upload-btn" (click)="create()">Create</button>
@@ -8,13 +8,19 @@
       CreateMany
     </button>
 
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="edit()">Edit</button>
-
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="delete()">Delete</button>
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="delete()">Delete</button> -->
   </div>
 </div>
 <div id="data-grid-demo">
-  <dx-data-grid id="gridContainer" [dataSource]="dataSource" keyExpr="id" [showBorders]="true">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="dataSource"
+    keyExpr="cpf"
+    [showBorders]="true"
+    (onRowInserting)="create($event)"
+    (onRowUpdating)="edit($event)"
+    (onRowRemoving)="delete($event)"
+  >
     <dxo-editing mode="popup" [allowUpdating]="true" [allowAdding]="true" [allowDeleting]="true">
       <dxo-popup title="Employee Info" [showTitle]="true" [width]="700" [height]="525"> </dxo-popup>
       <dxo-form>
