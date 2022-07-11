@@ -77,7 +77,7 @@ export class FinancialInformationWebRepository extends FinancialInformationRepos
       .pipe(map((x) => this.mapperList.mapFrom(x.data)));
   }
 
-  putFinancialInformation(param: FinancialInformationModel) {
+  putFinancialInformation(param: FinancialInformationModel): Observable<void> {
     return this.http
       .put<void>(
         `${environment.FINANCIALINFORMATION}financial-information/edit`,
