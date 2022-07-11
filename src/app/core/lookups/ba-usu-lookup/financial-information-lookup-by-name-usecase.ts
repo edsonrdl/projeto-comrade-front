@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UseCase } from '../../utils/bases/use-case';
-import { FinancialInformationLookupRepository } from './financial-information-lookup.repository';
+import { FinancialInformationLookupRepository } from './FinancialInformationLookupRepository';
 import { LookupModel } from '../../models/lookup.model';
 
 @Injectable({
