@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { LookupModel } from 'src/app/core/models/lookup.model';
 import { BaseHttpService } from 'src/app/services/http/base-http.service';
 import { environment } from 'src/environments/environment';
-import { FinancialInformationLookupRepository } from '../../core/lookups/ba-usu-lookup/financial-information-lookup.repository';
+import { FinancialInformationLookupRepository } from '../../core/lookups/ba-usu-lookup/FinancialInformationLookupRepository';
 import { LookupWebEntity } from './helpers/lookup-web-entity';
 import { LookupWebRepositoryMapper } from './helpers/lookup-web-repository-mapper';
 
