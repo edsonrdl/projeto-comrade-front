@@ -1,11 +1,12 @@
+import { EnumTypeFinancial } from './EnumTypeFinancial';
+
 export interface FinancialInformationModel {
   id?: string;
-  type: string;
-  date: string;
-  value: string;
+  type: EnumTypeFinancial;
+  dateTime: Date;
+  value: number;
   cpf: string;
   card: string;
-  hour: string;
   shop: string;
   store: string;
 }
