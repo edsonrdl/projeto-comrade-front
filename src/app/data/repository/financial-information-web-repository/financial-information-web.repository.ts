@@ -72,7 +72,6 @@ export class FinancialInformationWebRepository extends FinancialInformationRepos
       .post<ListFinancialInformationWebEntity>(
         `${environment.FINANCIALINFORMATION}financial-information/create-many`,
         this.mapperList.mapTo(param)
-        //param.map(this.mapper.mapTo)
       )
       .pipe(map((x) => this.mapperList.mapFrom(x.data)));
   }

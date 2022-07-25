@@ -10,11 +10,10 @@ export class FinancialInformationWebRepositoryMapper extends Mapper<
     return {
       id: param.id,
       type: param.type,
-      date: param.date,
+      dateTime: param.dateTime,
       value: param.value,
       cpf: param.cpf,
       card: param.card,
-      hour: param.hour,
       shop: param.shop,
       store: param.store,
     };
@@ -24,11 +23,10 @@ export class FinancialInformationWebRepositoryMapper extends Mapper<
     return {
       id: param.id,
       type: param.type,
-      date: param.date,
+      dateTime: param.dateTime,
       value: param.value,
       cpf: param.cpf,
       card: param.card,
-      hour: param.hour,
       shop: param.shop,
       store: param.store,
     };
