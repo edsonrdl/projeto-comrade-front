@@ -1,6 +1,4 @@
-<div class="upload-Financial">
-  <div>
-    <!-- <button mat-mini-fab color="primary" class="upload-btn" (click)="getAll()">GetAll</button>
+<!-- <button mat-mini-fab color="primary" class="upload-btn" (click)="getAll()">GetAll</button>
     <button mat-mini-fab color="primary" class="upload-btn" (click)="getById()">GetById</button>
 
     <button mat-mini-fab color="primary" class="upload-btn" (click)="create()">Create</button>
@@ -9,8 +7,7 @@
     </button>
 
     <button mat-mini-fab color="primary" class="upload-btn" (click)="delete()">Delete</button> -->
-  </div>
-</div>
+
 <div id="data-grid-demo">
   <dx-data-grid
     id="gridContainer"
@@ -26,11 +23,10 @@
       <dxo-form>
         <dxi-item itemType="group" [colCount]="1" [colSpan]="1">
           <dxi-item dataField="type"></dxi-item>
-          <dxi-item dataField="date"></dxi-item>
+          <dxi-item dataField="dateTime"></dxi-item>
           <dxi-item dataField="value"></dxi-item>
           <dxi-item dataField="cpf"></dxi-item>
           <dxi-item dataField="card"></dxi-item>
-          <dxi-item dataField="hour"></dxi-item>
           <dxi-item dataField="shop"></dxi-item>
           <dxi-item dataField="store"></dxi-item>
         </dxi-item>
@@ -51,11 +47,10 @@
     </dxo-toolbar>
 
     <dxi-column dataField="type"></dxi-column>
-    <dxi-column dataField="date"></dxi-column>
+    <dxi-column dataField="dateTime"></dxi-column>
     <dxi-column dataField="value"></dxi-column>
     <dxi-column dataField="cpf"></dxi-column>
     <dxi-column dataField="card"></dxi-column>
-    <dxi-column dataField="hour"></dxi-column>
     <dxi-column dataField="shop"></dxi-column>
     <dxi-column dataField="store"></dxi-column>
   </dx-data-grid>

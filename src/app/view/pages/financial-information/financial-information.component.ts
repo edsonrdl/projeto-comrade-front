@@ -11,8 +11,8 @@ import { GetFinancialInformationByIdUsecase } from 'src/app/core/usecases/financ
 import { PutFinancialInformationUsecase } from 'src/app/core/usecases/financial-information/put-financialInformation.usecase';
 import { SingleResultModel } from 'src/app/core/utils/responses/single-result.model';
 import { PostListFinancialInformationUsecase } from 'src/app/core/usecases/financial-information/post-list-financialInformation.usecase';
-import CustomStore from 'devextreme/data/custom_store';
-import { PageFilterModel } from 'src/app/core/utils/filters/page-filter.model';
+import { EnumTypeFinancial } from 'src/app/core/models/EnumTypeFinancial';
+
 @Component({
   selector: 'app-financial-information',
   templateUrl: 'financial-information.component.html',
@@ -41,6 +41,7 @@ export class FinancialInformationComponent implements OnInit {
     const file: File = event.target.files[0];
     this.fileName = file.name;
     let fileReader = new FileReader();
+    const financialInformationList: FinancialInformationModel[] = [];
 
     fileReader.onloadend = (e) => {
       const informations = [fileReader.result];
@@ -49,29 +50,69 @@ export class FinancialInformationComponent implements OnInit {
       let i = 0;
       for (i = 0; i < informationStrings.length; i++) {
         let financialInformation = this.toFinancialInformation(informationStrings[i]);
-        this.dataSource?.push(financialInformation);
+        financialInformationList?.push(financialInformation);
       }
       let listFinancialInformationModel: ListFinancialInformationModel = {
-        financialInformations: this.dataSource!,
+        financialInformations: financialInformationList,
       };
-      this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
+      this.postListFinancialInformationUsecase
+        .execute(listFinancialInformationModel)
+        .subscribe(() => this.dataSource.push(...financialInformationList));
     };
     fileReader.readAsText(file);
   }
 
   toFinancialInformation(item: string): FinancialInformationModel {
-    let financialInformation: FinancialInformationModel = {
-      type: item.slice(0, 1),
-      date: item.slice(1, 9),
-      value: item.slice(9, 19),
+    const stringDateTime = item.slice(1, 9);
+    console.log(stringDateTime);
+    var ano = stringDateTime.slice(0, 4);
+    ano = ano.concat('/');
+    let mes = stringDateTime.slice(4, 6);
+    mes = mes.concat('/');
+    let dia = stringDateTime.slice(6, 8);
+    const data = ano + mes + dia;
+    // console.log(data);
+    const stringhora = item.slice(42, 48);
+    // console.log(stringhora);
+    let hora = stringhora.slice(0, 2);
+    hora = hora.concat(':');
+    //console.log(hora);
+    let minut = stringhora.slice(2, 4);
+    minut = minut.concat(':');
+    //console.log(minut);
+    let segun = stringhora.slice(4, 6);
+    //console.log(segun);
+    const hour = hora + minut + segun;
+    // console.log(hour);
+    const dateTimeString = data + ' ' + hour;
+    //console.log(dateTimeString);
+    const dateTime = new Date(dateTimeString);
+    console.log(dateTime);
+
+    let valueInte = item.slice(9, 19);
+    const value = parseFloat(valueInte) / 100;
+    const valueFloat = value.toFixed(2);
+    // console.log(valueFloat);
+    let typeString = item.slice(0, 1);
+    const typeNum = parseInt(typeString);
+
+    // let stringOne = AnEnum[1];
+    const typeEnumKey: string = EnumTypeFinancial[typeNum];
+    const typeEnum: EnumTypeFinancial =
+      EnumTypeFinancial[typeEnumKey as keyof typeof EnumTypeFinancial];
+
+    const financialInformation: FinancialInformationModel = {
+      type: typeEnum | EnumTypeFinancial.None,
+      dateTime: dateTime,
+      value: Number(valueFloat),
       cpf: item.slice(19, 30),
       card: item.slice(30, 42),
-      hour: item.slice(42, 48),
       shop: item.slice(48, 62),
       store: item.slice(62, 81),
     };
     return financialInformation;
   }
+
   getAll(): void {
     this.getAllFinancialInformationUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
@@ -93,24 +134,13 @@ export class FinancialInformationComponent implements OnInit {
     console.log(model);
   }
   createMany(e: any): void {
-    console.log(e);
-    let financialInformation: FinancialInformationModel = {
-      type: '',
-      date: '',
-      value: '',
-      card: '',
-      hour: '',
-      shop: ' ',
-      store: '  ',
-      cpf: '',
-    };
-
     let listFinancialInformationModel: ListFinancialInformationModel = {
-      financialInformations: [financialInformation],
+      financialInformations: [],
     };
     this.postListFinancialInformationUsecase.execute(listFinancialInformationModel).subscribe();
   }
   edit(e: any): void {
+    console.log(e);
     const model = { ...e.oldData, ...e.newData } as FinancialInformationModel;
     this.putFinancialInformationUsecase.execute(model).subscribe();
   }
