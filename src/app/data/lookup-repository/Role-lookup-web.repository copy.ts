@@ -4,14 +4,14 @@ import { map } from 'rxjs/operators';
 import { LookupModel } from 'src/app/core/models/lookup.model';
 import { BaseHttpService } from 'src/app/services/http/base-http.service';
 import { environment } from 'src/environments/environment';
-import { FinancialInformationLookupRepository } from '../../core/lookups/ba-usu-lookup/FinancialInformationLookupRepository';
+import { RoleLookupRepository } from '../../core/lookups/ba-usu-lookup/role-lookup.repository';
 import { LookupWebEntity } from './helpers/lookup-web-entity';
 import { LookupWebRepositoryMapper } from './helpers/lookup-web-repository-mapper';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FinancialInformationLookupWebRepository extends FinancialInformationLookupRepository {
+export class RoleLookupWebRepository extends RoleLookupRepository {
   mapper = new LookupWebRepositoryMapper();
 
   constructor(public http: BaseHttpService) {
@@ -20,7 +20,7 @@ export class FinancialInformationLookupWebRepository extends FinancialInformatio
 
   GetAll(): Observable<LookupModel[]> {
     return this.http
-      .getAll<LookupWebEntity[]>(`${environment.FINANCIALINFORMATION}common/lookup-financial-informartion `)
+      .getAll<LookupWebEntity[]>(`${environment.ROLE}common/lookup-role`)
       .pipe(
         map((item) => {
           return item.data;
@@ -36,7 +36,7 @@ export class FinancialInformationLookupWebRepository extends FinancialInformatio
   GetAllByName(nome: string): Observable<LookupModel[]> {
     return this.http
       .getAll<LookupWebEntity[]>(
-        `${environment.SYSTEMUSER}common/lookup-predicate-financial-informartion -by-name/${nome}`
+        `${environment.ROLE}common/lookup-predicate-role-by-name/${nome}`
       )
       .pipe(
         map((item) => {

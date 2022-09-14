@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GetAllSystemUserUsecase } from '../../../core/usecases/system-user/get-all-airplane.usecase';
+import { GetAllSystemUserUsecase } from '../../../core/usecases/system-user/get-all-system-user.usecase';
 import { SystemUserModel } from '../../../core/models/system-user.model';
 import { PageResultModel } from '../../../core/utils/responses/page-result.model';
 

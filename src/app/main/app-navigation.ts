@@ -29,7 +29,17 @@ export const navigation = [
     ],
   },
   {
-    text: 'Dados', //Muda esse nome aqui
+  text: 'Role',
+  icon: 'folder',
+  items: [
+    {
+      text: 'Role',
+      path: '/role',
+    },
+  ],
+  },
+  {
+    text: 'Financial', //Muda esse nome aqui
     icon: 'folder',
     items: [
       {
