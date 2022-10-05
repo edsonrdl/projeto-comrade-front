@@ -50,6 +50,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'role-system-permission',
+    loadChildren: () =>
+      import('../view/pages/role-system-permission/role-system-permission.module').then((m) => m.RoleSystemPermissionModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'system-user',
     loadChildren: () =>
       import('../view/pages/system-user/system-user.module').then((m) => m.SystemUserModule),
