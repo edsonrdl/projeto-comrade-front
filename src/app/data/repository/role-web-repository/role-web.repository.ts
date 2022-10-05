@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RoleWebRepositoryMapper as RoleWebRepositoryMapper } from './role-web-repository-mapper';
-import { RoleWebEntity } from './role-web-entity';
+import { SystemRoleWebEntity } from './system-role-web-entity';
 import { map } from 'rxjs/operators';
 import { BaseHttpService } from 'src/app/services/http/base-http.service';
 import { environment } from 'src/environments/environment';
@@ -25,7 +25,7 @@ export class RoleWebRepository extends RoleRepository {
   getRoleById(id: string): Observable<SingleResultModel<RoleModel>> {
     PageResultModel;
     return this.http
-      .get<SingleResultModel<RoleWebEntity>>(
+      .get<SingleResultModel<SystemRoleWebEntity>>(
         `${environment.ROLE}role/get-by-id`,
         id
       )
@@ -34,7 +34,7 @@ export class RoleWebRepository extends RoleRepository {
 
   getAllRole(filter: PageFilterModel): Observable<PageResultModel<RoleModel>> {
     var request = this.http
-      .getAll<PageResultModel<RoleWebEntity>>(
+      .getAll<PageResultModel<SystemRoleWebEntity>>(
         `${environment.ROLE}role/get-all${makeParamFilterGrid(filter)}`
       )
       .pipe(
@@ -47,7 +47,7 @@ export class RoleWebRepository extends RoleRepository {
 
   postRole(param: RoleModel) {
     return this.http
-      .post<RoleWebEntity>(
+      .post<SystemRoleWebEntity>(
         `${environment.ROLE}role/create`,
         this.mapper.mapTo(param)
       )
