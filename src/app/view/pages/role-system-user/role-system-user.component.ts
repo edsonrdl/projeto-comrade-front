@@ -71,8 +71,8 @@ export class RoleSystemUserComponent implements OnInit {
           ...u,
           Roles: [
             {
-              id: '81696b17-7854-4967-4a9d-08da9687d7e8',
-              name: 'JUSEUS',
+              id: '00480a40-e701-4ce5-a32f-08daa6f68310',
+              name: 'TEST1ROLE',
             },
           ],
         };
@@ -81,8 +81,8 @@ export class RoleSystemUserComponent implements OnInit {
           ...u,
           Roles: [
             {
-              id: 'c22bcadf-ccd3-44af-c8b2-08da968ca774',
-              name: 'ABELL',
+              id: 'ff4128a4-7af3-48de-a330-08daa6f68310',
+              name: 'TEST2ROLE',
             },
           ],
         };

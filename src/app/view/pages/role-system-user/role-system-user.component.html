@@ -4,7 +4,7 @@
 
   <dx-data-grid [dataSource]="dataSource" (onRowClick)="showInfo($event)">
     <dxo-paging [pageSize]="10"></dxo-paging>
-
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
     <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
 
     <dxi-column dataField="name"> </dxi-column>
