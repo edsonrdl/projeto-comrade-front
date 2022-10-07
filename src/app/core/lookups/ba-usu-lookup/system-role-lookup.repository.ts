@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { LookupModel } from '../../models/lookup.model';
 
-export abstract class RoleLookupRepository {
+export abstract class SystemRoleLookupRepository {
   abstract GetAll(): Observable<LookupModel[]>;
   abstract GetAllByName(nome: string): Observable<LookupModel[]>;
 }

@@ -4,14 +4,14 @@ import { map } from 'rxjs/operators';
 import { LookupModel } from 'src/app/core/models/lookup.model';
 import { BaseHttpService } from 'src/app/services/http/base-http.service';
 import { environment } from 'src/environments/environment';
-import { RoleLookupRepository } from '../../core/lookups/ba-usu-lookup/role-lookup.repository';
+import { SystemRoleLookupRepository } from '../../core/lookups/ba-usu-lookup/system-role-lookup.repository';
 import { LookupWebEntity } from './helpers/lookup-web-entity';
 import { LookupWebRepositoryMapper } from './helpers/lookup-web-repository-mapper';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RoleLookupWebRepository extends RoleLookupRepository {
+export class SystemRoleLookupWebRepository extends SystemRoleLookupRepository {
   mapper = new LookupWebRepositoryMapper();
 
   constructor(public http: BaseHttpService) {
@@ -20,7 +20,7 @@ export class RoleLookupWebRepository extends RoleLookupRepository {
 
   GetAll(): Observable<LookupModel[]> {
     return this.http
-      .getAll<LookupWebEntity[]>(`${environment.ROLE}common/lookup-role`)
+      .getAll<LookupWebEntity[]>(`${environment.SYSTEMROLE}common/lookup-system-role`)
       .pipe(
         map((item) => {
           return item.data;
@@ -36,7 +36,7 @@ export class RoleLookupWebRepository extends RoleLookupRepository {
   GetAllByName(nome: string): Observable<LookupModel[]> {
     return this.http
       .getAll<LookupWebEntity[]>(
-        `${environment.ROLE}common/lookup-predicate-role-by-name/${nome}`
+        `${environment.SYSTEMROLE}common/lookup-predicate-system-role-by-name/${nome}`
       )
       .pipe(
         map((item) => {

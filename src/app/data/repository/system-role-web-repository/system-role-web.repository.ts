@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RoleWebRepositoryMapper as RoleWebRepositoryMapper } from './role-web-repository-mapper';
+import { SystemRoleWebRepositoryMapper as SystemRoleWebRepositoryMapper } from './system-role-web-repository-mapper';
 import { SystemRoleWebEntity } from './system-role-web-entity';
 import { map } from 'rxjs/operators';
 import { BaseHttpService } from 'src/app/services/http/base-http.service';
 import { environment } from 'src/environments/environment';
-import { RoleRepository } from 'src/app/core/repositories/role.repository';
-import { RoleModel } from 'src/app/core/models/role.model';
+import { SystemRoleRepository } from 'src/app/core/repositories/system-role.repository';
+import { SystemRoleModel } from 'src/app/core/models/system-role.model';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
 import { PageFilterModel } from 'src/app/core/utils/filters/page-filter.model';
 import { makeParamFilterGrid } from '../../helper.repository';
@@ -15,27 +15,27 @@ import { SingleResultModel } from '../../../core/utils/responses/single-result.m
 @Injectable({
   providedIn: 'root',
 })
-export class RoleWebRepository extends RoleRepository {
-  mapper = new RoleWebRepositoryMapper();
+export class SystemRoleWebRepository extends SystemRoleRepository {
+  mapper = new SystemRoleWebRepositoryMapper();
 
   constructor(public http: BaseHttpService) {
     super();
   }
 
-  getRoleById(id: string): Observable<SingleResultModel<RoleModel>> {
+  getRoleById(id: string): Observable<SingleResultModel<SystemRoleModel>> {
     PageResultModel;
     return this.http
       .get<SingleResultModel<SystemRoleWebEntity>>(
-        `${environment.ROLE}role/get-by-id`,
+        `${environment.SYSTEMROLE}system-role/get-by-id`,
         id
       )
       .pipe(map((x) => this.mapper.responseWebMapFrom(x.data)));
   }
 
-  getAllRole(filter: PageFilterModel): Observable<PageResultModel<RoleModel>> {
+  getAllRole(filter: PageFilterModel): Observable<PageResultModel<SystemRoleModel>> {
     var request = this.http
       .getAll<PageResultModel<SystemRoleWebEntity>>(
-        `${environment.ROLE}role/get-all${makeParamFilterGrid(filter)}`
+        `${environment.SYSTEMROLE}system-role/get-all${makeParamFilterGrid(filter)}`
       )
       .pipe(
         map((x) => {
@@ -45,24 +45,24 @@ export class RoleWebRepository extends RoleRepository {
     return request;
   }
 
-  postRole(param: RoleModel) {
+  postRole(param: SystemRoleModel) {
     return this.http
       .post<SystemRoleWebEntity>(
-        `${environment.ROLE}role/create`,
+        `${environment.SYSTEMROLE}system-role/create`,
         this.mapper.mapTo(param)
       )
       .pipe(map((x) => this.mapper.mapFrom(x.data)));
   }
 
-  putRole(param: RoleModel) {
+  putRole(param: SystemRoleModel) {
     return this.http
-      .put<void>(`${environment.ROLE}role/edit`, this.mapper.mapTo(param))
+      .put<void>(`${environment.SYSTEMROLE}system-role/edit`, this.mapper.mapTo(param))
       .pipe(map((x) => x.data));
   }
 
   deleteRole(id: string): Observable<void> {
     return this.http
-      .delete<void>(`${environment.ROLE}role/delete/${id}`, id)
+      .delete<void>(`${environment.SYSTEMROLE}system-role/delete/${id}`, id)
       .pipe(map((x) => x.data));
   }
 }

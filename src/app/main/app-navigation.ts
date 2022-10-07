@@ -32,21 +32,21 @@ export const navigation = [
       },
       {
         text: 'Role Permission',
-        path: '/role-system-permission',
+        path: '/system-role-system-permission',
       },
     ],
   },
   {
-  text: 'Role',
+  text: 'System Role',
   icon: 'folder',
   items: [
     {
-      text: 'Role',
-      path: '/role',
+      text: 'System Role',
+      path: '/system-role',
     },
     {
       text: 'Role Sytem User',
-      path: '/role-system-user',
+      path: '/system-role-system-user',
     },
   ],
   },
