@@ -22,7 +22,7 @@ export class SystemRoleWebRepository extends SystemRoleRepository {
     super();
   }
 
-  getRoleById(id: string): Observable<SingleResultModel<SystemRoleModel>> {
+  getSystemRoleById(id: string): Observable<SingleResultModel<SystemRoleModel>> {
     PageResultModel;
     return this.http
       .get<SingleResultModel<SystemRoleWebEntity>>(
@@ -32,7 +32,7 @@ export class SystemRoleWebRepository extends SystemRoleRepository {
       .pipe(map((x) => this.mapper.responseWebMapFrom(x.data)));
   }
 
-  getAllRole(filter: PageFilterModel): Observable<PageResultModel<SystemRoleModel>> {
+  getAllSystemRole(filter: PageFilterModel): Observable<PageResultModel<SystemRoleModel>> {
     var request = this.http
       .getAll<PageResultModel<SystemRoleWebEntity>>(
         `${environment.SYSTEMROLE}system-role/get-all${makeParamFilterGrid(filter)}`
@@ -45,7 +45,7 @@ export class SystemRoleWebRepository extends SystemRoleRepository {
     return request;
   }
 
-  postRole(param: SystemRoleModel) {
+  postSystemRole(param: SystemRoleModel) {
     return this.http
       .post<SystemRoleWebEntity>(
         `${environment.SYSTEMROLE}system-role/create`,
@@ -54,13 +54,13 @@ export class SystemRoleWebRepository extends SystemRoleRepository {
       .pipe(map((x) => this.mapper.mapFrom(x.data)));
   }
 
-  putRole(param: SystemRoleModel) {
+  putSystemRole(param: SystemRoleModel) {
     return this.http
       .put<void>(`${environment.SYSTEMROLE}system-role/edit`, this.mapper.mapTo(param))
       .pipe(map((x) => x.data));
   }
 
-  deleteRole(id: string): Observable<void> {
+  deleteSystemRole(id: string): Observable<void> {
     return this.http
       .delete<void>(`${environment.SYSTEMROLE}system-role/delete/${id}`, id)
       .pipe(map((x) => x.data));

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RoleSystemUserComponent } from './role-system-user.component';
+import { SystemRoleSystemPermissionComponent } from './system-role-system-permission.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: RoleSystemUserComponent,
+    component: SystemRoleSystemPermissionComponent,
   },
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RoleRoutingModule {}
+export class SystemRoleSystemPermissionRoutingModule {}

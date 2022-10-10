@@ -18,7 +18,7 @@ import { SystemUserLookupWebRepository } from '../data/lookup-repository/System-
 import { SystemPermissionLookupRepository } from '../core/lookups/ba-usu-lookup/system-permission-lookup.repository';
 import { SystemPermissionLookupWebRepository } from '../data/lookup-repository/System-Permission-lookup-web.repository';
 import { SystemRoleLookupRepository } from '../core/lookups/ba-usu-lookup/system-role-lookup.repository';
-import { SystemRoleLookupWebRepository } from '../data/lookup-repository/SystemRole-lookup-web.repository';
+import { SystemRoleLookupWebRepository } from '../data/lookup-repository/System-role-lookup-web.repository';
 import { AirplaneRepository } from '../core/repositories/airplane.repository';
 import { AirplaneWebRepository } from '../data/repository/airplane-web-repository/airplane-web.repository';
 import { UnauthenticatedContentModule } from './unauthenticated-content';

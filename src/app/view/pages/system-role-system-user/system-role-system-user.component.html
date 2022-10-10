@@ -1,4 +1,4 @@
-<h2 class="content-block">SYSTEM USER x ROLE</h2>
+<h2 class="content-block">SYSTEM USER x SYSTEM ROLE</h2>
 <div>
 
 
@@ -17,9 +17,9 @@
 
 
     <dxi-item>
-      <div *ngFor="let role of dataSourceRole">
+      <div *ngFor="let role of dataSourceSystemRole">
         <dx-check-box [text]="role.name" [value]="false" (onValueChanged)="exemplo1($event)"
-          (onValueChanged)="exemplo2(role)">
+          (onValueChanged)="exemplo2(systemrole)">
         </dx-check-box>
       </div>
     </dxi-item>

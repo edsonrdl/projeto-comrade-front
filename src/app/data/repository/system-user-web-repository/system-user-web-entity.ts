@@ -1,4 +1,4 @@
-import { RoleModel } from "src/app/core/models/role.model";
+import { SystemUserModel } from "src/app/core/models/system-user.model";
 
 export interface SystemUserWebEntity {
   id?: string;
@@ -6,5 +6,4 @@ export interface SystemUserWebEntity {
   email: string;
   registration: string;
   registerDate: Date;
-  roles:RoleModel[];
 }

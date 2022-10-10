@@ -1,30 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
-import { RoleModel } from 'src/app/core/models/role.model';
-import { GetAllRoleUsecase } from 'src/app/core/usecases/role/get-all-role.usecase';
-import dxPopup from 'devextreme/ui/popup';
+import { SystemRoleModel } from 'src/app/core/models/system-role.model';
+import { GetAllSystemRoleUsecase } from 'src/app/core/usecases/system-role/get-all-system-role.usecase';
 import { ModalService } from '../../components/modal/modal.service';
 import { SystemPermissionModel } from 'src/app/core/models/system-permission.model';
 import { GetAllSystemPermissionUsecase } from 'src/app/core/usecases/system-permission/get-all-system-permission.usecase';
 
 @Component({
-  selector: 'app-role',
-  templateUrl: 'role-system-permission.component.html',
-  styleUrls: ['role-system-permission.component.scss'],
+  selector: 'app-system-role',
+  templateUrl: 'system-role-system-permission.component.html',
+  styleUrls: ['system-role-system-permission.component.scss'],
   providers: [],
 })
-export class RoleSystemPermissionComponent implements OnInit {
-  dataSource!: RoleModel[];
+export class SystemRoleSystemPermissionComponent implements OnInit {
+  dataSource!: SystemRoleModel[];
   dataSourceAux: any[] = [];
   dataSourceSystemPermission!:SystemPermissionModel[];
-  currentRole!: RoleModel;  
+  currentSystemRole!: SystemRoleModel;  
   popupVisible = false;
   selectedSystemPermission!: SystemPermissionModel[];
   
   popup: any = {};
 
   constructor(
-    private getAllRoleUsecase: GetAllRoleUsecase,
+    private getAllSystemRoleUsecase: GetAllSystemRoleUsecase,
     private getAllSystemPermissionUsecase: GetAllSystemPermissionUsecase,
     private modalService: ModalService,
   ) {
@@ -37,9 +36,9 @@ export class RoleSystemPermissionComponent implements OnInit {
   }
 
   getAll(): void {
-    this.getAllRoleUsecase
+    this.getAllSystemRoleUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<RoleModel>) => {
+      .subscribe((grid: PageResultModel<SystemRoleModel>) => {
         this.dataSource = grid.data ?? [];
       });
   }

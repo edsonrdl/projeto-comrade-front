@@ -4,28 +4,28 @@ import { SystemUserModel } from 'src/app/core/models/system-user.model';
 import { GetAllSystemUserUsecase } from 'src/app/core/usecases/system-user/get-all-system-user.usecase';
 import dxPopup from 'devextreme/ui/popup';
 import { ModalService } from '../../components/modal/modal.service';
-import { RoleModel } from 'src/app/core/models/role.model';
-import { GetAllRoleUsecase } from 'src/app/core/usecases/role/get-all-role.usecase';
+import { SystemRoleModel } from 'src/app/core/models/system-role.model';
+import { GetAllSystemRoleUsecase } from 'src/app/core/usecases/system-role/get-all-system-role.usecase';
 
 @Component({
   selector: 'app-system-user',
-  templateUrl: 'role-system-user.component.html',
-  styleUrls: ['role-system-user.component.scss'],
+  templateUrl: 'system-role-system-user.component.html',
+  styleUrls: ['system-role-system-user.component.scss'],
   providers: [],
 })
-export class RoleSystemUserComponent implements OnInit {
+export class SystemRoleSystemUserComponent implements OnInit {
   dataSource!: SystemUserModel[];
   dataSourceAux: any[] = [];
-  dataSourceRole!:RoleModel[];
+  dataSourceSystemRole!:SystemRoleModel[];
   currentSystemUser!: SystemUserModel;  
   popupVisible = false;
-  selectedRole!: RoleModel[];
+  selectedSystemRole!: SystemRoleModel[];
   
   popup: any = {};
 
   constructor(
     private getAllSystemUserUsecase: GetAllSystemUserUsecase,
-    private getAllRoleUsecase: GetAllRoleUsecase,
+    private getAllSystemRoleUsecase: GetAllSystemRoleUsecase,
     private modalService: ModalService,
   ) {
     
@@ -33,7 +33,7 @@ export class RoleSystemUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    this.getAllRole();
+    this.getAllSystemRole();
   }
 
   getAll(): void {
@@ -43,12 +43,12 @@ export class RoleSystemUserComponent implements OnInit {
         this.dataSource = grid.data ?? [];
       });
   }
-  getAllRole(): void {
-    this.getAllRoleUsecase
+  getAllSystemRole(): void {
+    this.getAllSystemRoleUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<RoleModel>) => {
+      .subscribe((grid: PageResultModel<SystemRoleModel>) => {
         console.log(grid.data);
-        this.dataSourceRole = grid.data ?? [];
+        this.dataSourceSystemRole = grid.data ?? [];
       });
   }
 
@@ -69,7 +69,7 @@ export class RoleSystemUserComponent implements OnInit {
       if (u.id == 'ec872b9a-484f-437f-2ec2-08da9b39d088') {
         return {
           ...u,
-          Roles: [
+          SystemRoles: [
             {
               id: '00480a40-e701-4ce5-a32f-08daa6f68310',
               name: 'TEST1ROLE',
@@ -79,7 +79,7 @@ export class RoleSystemUserComponent implements OnInit {
       } else {
         return {
           ...u,
-          Roles: [
+          SystemRoles: [
             {
               id: 'ff4128a4-7af3-48de-a330-08daa6f68310',
               name: 'TEST2ROLE',
@@ -92,7 +92,7 @@ export class RoleSystemUserComponent implements OnInit {
 
   showInfo(e:any) {
     console.log(e.data);
-    this.selectedRole = e.data;
+    this.selectedSystemRole = e.data;
     this.popupVisible = true;
   }
   showClose() {
@@ -104,7 +104,7 @@ export class RoleSystemUserComponent implements OnInit {
     console.log(e.value);
   }
 
-  exemplo2(role: RoleModel){
+  exemplo2(role: SystemRoleModel){
     console.log(role);
   }
 }

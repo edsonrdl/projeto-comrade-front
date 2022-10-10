@@ -45,13 +45,13 @@ export const navigation = [
       path: '/system-role',
     },
     {
-      text: 'Role Sytem User',
+      text: 'System role Sytem User',
       path: '/system-role-system-user',
     },
   ],
   },
 {
-text: 'SystemPermission',
+text: 'System Permission',
 icon: 'folder',
 items: [
   {

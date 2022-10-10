@@ -1,4 +1,3 @@
-import { RoleModel } from "./role.model";
 
 export interface SystemUserModel {
   id?: string;
@@ -6,5 +5,5 @@ export interface SystemUserModel {
   email: string;
   registration: string;
   registerDate: Date;
-  roles:RoleModel[];
+
 }
