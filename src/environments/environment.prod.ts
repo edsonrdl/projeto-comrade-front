@@ -7,6 +7,6 @@ export const environment = {
   googleMapsApiKey: '',
   TOKEN: 'https://localhost:44304/api/v1/',
   SYSTEMUSER: 'https://localhost:44304/api/v2/',
-  ROLE: 'https://localhost:44304/api/v1/',
+  SYSTEMROLE: 'https://localhost:44304/api/v1/',
   SYSTEMPERMISSION: 'https://localhost:44304/api/v1/',
 };
