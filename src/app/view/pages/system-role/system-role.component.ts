@@ -42,18 +42,13 @@ export class SystemRoleComponent implements OnInit {
     this.getSystemRoleByIdUsecase
       .execute('id')
       .subscribe((model: SingleResultModel<SystemRoleModel>) => {
-        console.log(model);
       });
   }
   create(e: any): void {
-    console.log(e);
     const model = e.data as SystemRoleModel;
     this.postSystemRoleUsecase.execute(model).subscribe();
-    console.log(model);
   }
-  
   edit(e: any): void {
-    console.log(e);
     const model = { ...e.oldData, ...e.newData } as SystemRoleModel;
     this.putSystemRoleUsecase.execute(model).subscribe();
   }
@@ -64,10 +59,8 @@ export class SystemRoleComponent implements OnInit {
     }
   }
   showInfo() {
-    console.log('teste');
     this.modalService.open('modal-pesquisa');
   }
-
   closeDialog(rowIndex: any) {
     return this.modalService.close('modal-pesquisa');
   }

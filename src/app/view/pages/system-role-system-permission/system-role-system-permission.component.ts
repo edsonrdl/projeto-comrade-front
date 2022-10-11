@@ -20,7 +20,7 @@ export class SystemRoleSystemPermissionComponent implements OnInit {
   popupVisible = false;
   selectedSystemPermission!: SystemPermissionModel[];
   
-  popup: any = {};
+  popupModal: any = {};
 
   constructor(
     private getAllSystemRoleUsecase: GetAllSystemRoleUsecase,
@@ -46,14 +46,13 @@ export class SystemRoleSystemPermissionComponent implements OnInit {
     this.getAllSystemPermissionUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<SystemPermissionModel>) => {
-        console.log(grid.data);
+      
         this.dataSourceSystemPermission = grid.data ?? [];
       });
   }
 
   popUpInitialize(e: any){
-    console.log(e.component);
-    this.popup = e.component;
+    this.popupModal = e.component;
   }
 
   mockUserList(): void {
@@ -83,20 +82,11 @@ export class SystemRoleSystemPermissionComponent implements OnInit {
   }
 
   showInfo(e:any) {
-    console.log(e.data);
     this.selectedSystemPermission = e.data;
     this.popupVisible = true;
   }
   showClose() {
-  
+
     this.modalService.close('modal-fechar');
-  } 
-
-  exemplo1(e:any){
-    console.log(e.value);
-  }
-
-  exemplo2(systemPermission: SystemPermissionModel){
-    console.log(systemPermission);
   }
 }
