@@ -98,5 +98,19 @@ export class SystemRoleSystemUserComponent implements OnInit {
   showClose() {
   
     this.modalService.close('modal-fechar');
+  }
+  exemplo1(e:any){
+    console.log(e.value);
+  }
+
+  exemplo2(systemRole: SystemRoleModel){
+    console.log(systemRole);
   } 
+  getAllIdRSystemRoleSystemUser(): void {
+    this.getAllSystemRoleSystemUser
+      .execute({ pageSize: 20, pageNumber: 1 })
+      .subscribe((grid: PageResultModel<SystemUserSystemRoleManageModel>) => {
+        this.dataSource = grid.data ?? [];
+      });
+  }
 }

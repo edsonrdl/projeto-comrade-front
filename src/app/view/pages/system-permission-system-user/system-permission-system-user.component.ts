@@ -100,4 +100,5 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   exemplo2(systemPermission: SystemPermissionModel){
     console.log(systemPermission);
   }
+
 }
