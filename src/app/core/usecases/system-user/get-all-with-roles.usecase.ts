@@ -16,6 +16,6 @@ export class GetallwithRolesUsecase
   constructor(private systemUserRepository: SystemUserRepository) {}
 
   execute(filter: PageFilterModel): Observable<PageResultModel<SystemUserSystemRolesModel>> {
-    return this.systemUserRepository.getallwithRoles(filter);
+    return this.systemUserRepository.getAllWithRoles(filter);
   }
 }

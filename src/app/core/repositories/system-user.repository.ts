@@ -16,6 +16,6 @@ export abstract class SystemUserRepository {
   abstract deleteSystemUser(id: string): Observable<void>;
   abstract getAllWithPermissions(filter: PageFilterModel): Observable<PageResultModel<SystemUserSystemPermissionsModel>>;
   abstract managePermissions(param: SystemUserManagePermissionsModel): Observable<void>;
-  abstract getallwithRoles(filter: PageFilterModel): Observable<PageResultModel<SystemUserSystemRolesModel>>;
-  abstract manageroles(param:SystemUserManageRolesModel): Observable<void>;
+  abstract getAllWithRoles(filter: PageFilterModel): Observable<PageResultModel<SystemUserSystemRolesModel>>;
+  abstract manageRoles(param:SystemUserManageRolesModel): Observable<void>;
 }

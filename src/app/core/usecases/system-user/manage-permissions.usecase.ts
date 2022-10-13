@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UseCase } from '../../utils/bases/use-case';
 import { Observable } from 'rxjs';
 import { SystemUserRepository } from '../../repositories/system-user.repository';
-import { SystemUserManagePermissionsModel } from '../../models/system-user-manage-permission.model';
+import { SystemUserManagePermissionsModel } from '../../models/system-user-manage-permissions.model';
 
 @Injectable({
   providedIn: 'root',
