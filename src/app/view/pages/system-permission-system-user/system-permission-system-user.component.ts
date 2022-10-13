@@ -6,6 +6,10 @@ import dxPopup from 'devextreme/ui/popup';
 import { ModalService } from '../../components/modal/modal.service';
 import { SystemPermissionModel } from 'src/app/core/models/system-permission.model';
 import { GetAllSystemPermissionUsecase } from 'src/app/core/usecases/system-permission/get-all-system-permission.usecase';
+import { GetAllWithPermissionsUsecase } from 'src/app/core/usecases/system-user/get-all-with-permissions.usecase';
+import { SystemUserSystemPermissionsModel } from 'src/app/core/models/system-user-system-permissions.model';
+import { ManagePermissionsUsecase } from 'src/app/core/usecases/system-user/manage-permissions.usecase';
+import { SystemUserManagePermissionsModel } from 'src/app/core/models/system-user-manage-permissions.model';
 
 @Component({
   selector: 'app-system-user',
@@ -27,6 +31,8 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     private getAllSystemUserUsecase: GetAllSystemUserUsecase,
     private getAllSystemPermissionUsecase: GetAllSystemPermissionUsecase,
     private modalService: ModalService,
+    private getAllWithPermissionsUsecase: GetAllWithPermissionsUsecase,
+    private managePermissionsUsecase: ManagePermissionsUsecase,
   ) {
     
   }
@@ -100,5 +106,16 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   exemplo2(systemPermission: SystemPermissionModel){
     console.log(systemPermission);
   }
-
+  getAllWithPermissions(): void {
+    this.getAllWithPermissionsUsecase
+      .execute({ pageSize: 20, pageNumber: 1 })
+      .subscribe((grid: PageResultModel<SystemUserSystemPermissionsModel>) => {
+        this.dataSource = grid.data ?? [];
+      });
+  }
+  managePermissions(e: any): void {
+    console.log(e);
+    const model = { ...e.oldData, ...e.newData } as SystemUserManagePermissionsModel;
+    this.managePermissionsUsecase.execute(model).subscribe();
+  }
 }

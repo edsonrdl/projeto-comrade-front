@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
 import { SystemUserModel } from 'src/app/core/models/system-user.model';
 import { GetAllSystemUserUsecase } from 'src/app/core/usecases/system-user/get-all-system-user.usecase';
-import dxPopup from 'devextreme/ui/popup';
 import { ModalService } from '../../components/modal/modal.service';
 import { SystemRoleModel } from 'src/app/core/models/system-role.model';
 import { GetAllSystemRoleUsecase } from 'src/app/core/usecases/system-role/get-all-system-role.usecase';
+import { SystemUserSystemRolesModel } from 'src/app/core/models/system-user-system-roles.model';
+import { GetallwithRolesUsecase } from 'src/app/core/usecases/system-user/get-all-with-roles.usecase';
+import { ManageRolesUsecase } from 'src/app/core/usecases/system-user/manage-roles.usecase';
+import { SystemUserManageRolesModel } from 'src/app/core/models/system-user-manage-roles.model';
 
 @Component({
   selector: 'app-system-user',
@@ -27,6 +30,8 @@ export class SystemRoleSystemUserComponent implements OnInit {
     private getAllSystemUserUsecase: GetAllSystemUserUsecase,
     private getAllSystemRoleUsecase: GetAllSystemRoleUsecase,
     private modalService: ModalService,
+    private getAllWithRolesUsecase: GetallwithRolesUsecase,
+    private manageRolesUsecase: ManageRolesUsecase,
   ) {
     
   }
@@ -47,23 +52,13 @@ export class SystemRoleSystemUserComponent implements OnInit {
     this.getAllSystemRoleUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<SystemRoleModel>) => {
-        console.log(grid.data);
         this.dataSourceSystemRole = grid.data ?? [];
       });
   }
-
   popUpInitialize(e: any){
     console.log(e.component);
     this.popup = e.component;
   }
-
-  // showPopUp(){
-  //   // this.curentSystemUser = (event.row?.data as SystemUserModel);
-  //   console.log(this.popup);
-  //   this.popup.show();
-  //   this.popupVisible = true;
-  // }
-
   mockUserList(): void {
     this.dataSourceAux = this.dataSource.map((u) => {
       if (u.id == 'ec872b9a-484f-437f-2ec2-08da9b39d088') {
@@ -106,11 +101,16 @@ export class SystemRoleSystemUserComponent implements OnInit {
   exemplo2(systemRole: SystemRoleModel){
     console.log(systemRole);
   } 
-  getAllIdRSystemRoleSystemUser(): void {
-    this.getAllSystemRoleSystemUser
+  getAllWithRoles(): void {
+    this.getAllWithRolesUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<SystemUserSystemRoleManageModel>) => {
+      .subscribe((grid: PageResultModel<SystemUserSystemRolesModel>) => {
         this.dataSource = grid.data ?? [];
       });
+  }
+  manageRoles(e: any): void {
+    console.log(e);
+    const model = { ...e.oldData, ...e.newData } as SystemUserManageRolesModel;
+    this.manageRolesUsecase.execute(model).subscribe();
   }
 }
