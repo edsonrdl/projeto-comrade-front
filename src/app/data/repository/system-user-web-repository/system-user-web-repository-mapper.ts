@@ -10,6 +10,7 @@ export class SystemUserWebRepositoryMapper extends Mapper<SystemUserWebEntity, S
       email: param.email,
       registration: param.registration,
       registerDate: new Date(param.registerDate),
+      
     };
   }
 

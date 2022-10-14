@@ -1,0 +1,30 @@
+<h2 class="content-block">SYSTEM USER x SYSTEM PERMISSION</h2>
+<div>
+
+
+  <dx-data-grid [dataSource]="dataSource" (onRowClick)="showInfo($event)">
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+
+    <dxi-column dataField="name"> </dxi-column>
+    <dxi-column dataField="email"></dxi-column>
+    <dxi-column dataField="registration"></dxi-column>
+    <dxi-column dataField="registerDate"></dxi-column>
+  </dx-data-grid>
+  <dx-popup [showTitle]="true" title="Information" [dragEnabled]="false" [hideOnOutsideClick]="true"
+    [showCloseButton]="true" [(visible)]="popupVisible">
+
+
+    <dxi-item>
+      <div *ngFor="let systemPermission of dataSourceSystemPermission">
+        <dx-check-box [text]="systemPermission.name" [value]="false" (onValueChanged)="exemplo1($event)"
+          (onValueChanged)="exemplo2(systemPermission)">
+        </dx-check-box>
+      </div>
+    </dxi-item>
+    <dxi-toolbar-item widget="dxButton" toolbar="bottom" location="after" [options]="closeButtonOptions">
+    </dxi-toolbar-item>
+  </dx-popup>
+
+</div>

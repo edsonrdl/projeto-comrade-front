@@ -59,7 +59,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   // open modal
   open(): void {
-    console.warn('teste2');
+    
     /*this.element.className = 'open';*/
     document.body.classList.add('modal-open');
   }
@@ -67,6 +67,13 @@ export class ModalComponent implements OnInit, OnDestroy {
   // close modal
   close(): void {
     /*this.element.className = 'closed';*/
+    document.body.classList.remove('modal-open');
+  }
+  saved(): void {
+  
+
+alert("sucesso");
+
     document.body.classList.remove('modal-open');
   }
 }

@@ -32,9 +32,39 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'system-role',
+    loadChildren: () =>
+      import('../view/pages/system-role/system-role.module').then((m) => m.SystemRoleModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'system-role-system-user',
+    loadChildren: () =>
+      import('../view/pages/system-role-system-user/system-role-system-user.module').then((m) => m.SystemRoleSystemUserModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'system-permission-system-user',
+    loadChildren: () =>
+      import('../view/pages/system-permission-system-user/system-permission-system-user.module').then((m) => m.SystemPermissionSystemUserModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'system-role-system-permission',
+    loadChildren: () =>
+      import('../view/pages/system-role-system-permission/system-role-system-permission.module').then((m) => m.SystemRoleSystemPermissionModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'system-user',
     loadChildren: () =>
       import('../view/pages/system-user/system-user.module').then((m) => m.SystemUserModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'system-permission',
+    loadChildren: () =>
+      import('../view/pages/system-permission/system-permission.module').then((m) => m.SystemPermissionModule),
     canActivate: [AuthGuard],
   },
   {

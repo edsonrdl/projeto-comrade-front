@@ -15,33 +15,38 @@ import { CreateSystemUserUsecase } from 'src/app/core/usecases/system-user/creat
 export class SystemUserComponent implements OnInit {
   dataSource!: SystemUserModel[];
   constructor(
-    private getAllSystemUser: GetAllSystemUserUsecase,
-    private createSystemUser: CreateSystemUserUsecase,
-    private deleteSystemUser: DeleteSystemUserUsecase,
-    private editSystemUser: EditSystemUserUsecase
+    private getAllSystemUserUsecase: GetAllSystemUserUsecase,
+    private postSystemUserUsecase: CreateSystemUserUsecase,
+    private deleteSystemUserUsercase: DeleteSystemUserUsecase,
+    private putSystemUserUsecase: EditSystemUserUsecase
   ) {}
 
   ngOnInit(): void {
-    this.getAllSystemUser
+    this.getAll();
+  }
+  getAll(): void {
+    this.getAllSystemUserUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<SystemUserModel>) => {
-        this.dataSource = grid.data!;
+        this.dataSource = grid.data ?? [];
       });
   }
-
+ 
+  create(e: any): void {
+    console.log(e);
+    const model = e.data as SystemUserModel;
+    this.postSystemUserUsecase.execute(model).subscribe();
+    console.log(model);
+  }
+  edit(e: any): void {
+    console.log(e);
+    const model = { ...e.oldData, ...e.newData } as SystemUserModel;
+    this.putSystemUserUsecase.execute(model).subscribe();
+  }
   delete(e: any): void {
-    this.deleteSystemUser.execute(e.key).subscribe();
-  }
-
-  beforeSave(e: any): void {
-    e.data.registerDate = new Date();
-  }
-
-  save(e: any): void {
-    this.createSystemUser.execute(e.data).subscribe();
-  }
-
-  update(e: any): void {
-    this.editSystemUser.execute(e.data).subscribe();
+    const model = e.data as SystemUserModel;
+    if (model.id) {
+      this.deleteSystemUserUsercase.execute(model.id).subscribe();
+    }
   }
 }
