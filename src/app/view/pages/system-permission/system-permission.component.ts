@@ -40,18 +40,14 @@ export class SystemPermissionComponent implements OnInit {
     this.getSystemPermissionByIdUsecase
       .execute('id')
       .subscribe((model: SingleResultModel<SystemPermissionModel>) => {
-        console.log(model);
       });
   }
   create(e: any): void {
-    console.log(e);
     const model = e.data as SystemPermissionModel;
     this.postSystemPermissionUsecase.execute(model).subscribe();
-    console.log(model);
   }
   
   edit(e: any): void {
-    console.log(e);
     const model = { ...e.oldData, ...e.newData } as SystemPermissionModel;
     this.putSystemPermissionUsecase.execute(model).subscribe();
   }

@@ -109,7 +109,6 @@ export class SystemRoleSystemUserComponent implements OnInit {
       });
   }
   manageRoles(e: any): void {
-    console.log(e);
     const model = { ...e.oldData, ...e.newData } as SystemUserManageRolesModel;
     this.manageRolesUsecase.execute(model).subscribe();
   }

@@ -57,30 +57,22 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   }
 
   popUpInitialize(e: any){
-    console.log(e.component);
     this.popup = e.component;
   }
-
   showInfo(e:any) {
-    console.log(e.data);
     this.currentSystemUser = {...e.data};
     this.popupVisible = true;
   }
-
   showClose() {
     this.modalService.close('modal-fechar');
   }
-  
+ 
   managePermissions(e: any): void {
     const model =e.data  as SystemUserManagePermissionsModel;
     this.managePermissionsUsecase.execute(model).subscribe();
   }
 
-  addPermissionInCurrentUser(){(e:any) {
-    console.log(e.data);
-    this.currentSystemUser = {...e.data};
-    this.popupVisible = true;
-  }
+  addPermissionInCurrentUser() {
 
   }
   removePermissionFromCurrentUser(){
