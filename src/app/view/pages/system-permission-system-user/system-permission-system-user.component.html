@@ -14,17 +14,15 @@
   </dx-data-grid>
   <dx-popup [showTitle]="true" title="Information" [dragEnabled]="false" [hideOnOutsideClick]="true"
     [showCloseButton]="true" [(visible)]="popupVisible">
-
-
     <dxi-item>
       <div *ngFor="let systemPermission of dataSourceSystemPermission">
-        <dx-check-box [text]="systemPermission.name" [value]="false" (onValueChanged)="exemplo1($event)"
-          (onValueChanged)="exemplo2(systemPermission)">
+        <dx-check-box [text]="systemPermission.name" [value]="valueCheck">
         </dx-check-box>
       </div>
     </dxi-item>
-    <dxi-toolbar-item widget="dxButton" toolbar="bottom" location="after" [options]="closeButtonOptions">
-    </dxi-toolbar-item>
+
+    <dx-button text="Save" [width]="120" (onClick)="managePermissions()">
+    </dx-button>
   </dx-popup>
 
 </div>

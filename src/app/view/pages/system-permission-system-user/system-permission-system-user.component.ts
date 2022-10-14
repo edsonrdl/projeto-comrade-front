@@ -19,20 +19,19 @@ import { SystemUserManagePermissionsModel } from 'src/app/core/models/system-use
 })
 export class SystemPermissionSystemUserComponent implements OnInit {
   dataSource!: SystemUserModel[];
-  dataSourceAux: any[] = [];
   dataSourceSystemPermission!:SystemPermissionModel[];
-  currentSystemUser!: SystemUserModel;  
+  currentSystemUser!: SystemUserSystemPermissionsModel;  
   popupVisible = false;
-  selectedSystemPermission!: SystemPermissionModel[];
+  valueCheck= false
   
   popup: any = {};
 
   constructor(
-    private getAllSystemUserUsecase: GetAllSystemUserUsecase,
     private getAllSystemPermissionUsecase: GetAllSystemPermissionUsecase,
     private modalService: ModalService,
     private getAllWithPermissionsUsecase: GetAllWithPermissionsUsecase,
     private managePermissionsUsecase: ManagePermissionsUsecase,
+    
   ) {
     
   }
@@ -43,9 +42,9 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   }
 
   getAll(): void {
-    this.getAllSystemUserUsecase
+    this.getAllWithPermissionsUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<SystemUserModel>) => {
+      .subscribe((grid: PageResultModel<SystemUserSystemPermissionsModel>) => {
         this.dataSource = grid.data ?? [];
       });
   }
@@ -53,7 +52,6 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     this.getAllSystemPermissionUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<SystemPermissionModel>) => {
-        console.log(grid.data);
         this.dataSourceSystemPermission = grid.data ?? [];
       });
   }
@@ -63,59 +61,29 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     this.popup = e.component;
   }
 
-  mockUserList(): void {
-    this.dataSourceAux = this.dataSource.map((u) => {
-      if (u.id == 'ec872b9a-484f-437f-2ec2-08da9b39d088') {
-        return {
-          ...u,
-          SystemPermissions: [
-            {
-              id: '81696b17-7854-4967-4a9d-08da9687d7e8',
-              name: 'JUSEUS',
-            },
-          ],
-        };
-      } else {
-        return {
-          ...u,
-          SystemPermissions: [
-            {
-              id: 'c22bcadf-ccd3-44af-c8b2-08da968ca774',
-              name: 'ABELL',
-            },
-          ],
-        };
-      }
-    });
-  }
-
   showInfo(e:any) {
     console.log(e.data);
-    this.selectedSystemPermission = e.data;
+    this.currentSystemUser = {...e.data};
     this.popupVisible = true;
   }
+
   showClose() {
-  
     this.modalService.close('modal-fechar');
-  } 
-
-  exemplo1(e:any){
-    console.log(e.value);
   }
-
-  exemplo2(systemPermission: SystemPermissionModel){
-    console.log(systemPermission);
-  }
-  getAllWithPermissions(): void {
-    this.getAllWithPermissionsUsecase
-      .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<SystemUserSystemPermissionsModel>) => {
-        this.dataSource = grid.data ?? [];
-      });
-  }
+  
   managePermissions(e: any): void {
-    console.log(e);
-    const model = { ...e.oldData, ...e.newData } as SystemUserManagePermissionsModel;
+    const model =e.data  as SystemUserManagePermissionsModel;
     this.managePermissionsUsecase.execute(model).subscribe();
+  }
+
+  addPermissionInCurrentUser(){(e:any) {
+    console.log(e.data);
+    this.currentSystemUser = {...e.data};
+    this.popupVisible = true;
+  }
+
+  }
+  removePermissionFromCurrentUser(){
+
   }
 }
