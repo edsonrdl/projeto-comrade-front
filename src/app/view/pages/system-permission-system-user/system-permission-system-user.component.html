@@ -16,7 +16,8 @@
     [showCloseButton]="true" [(visible)]="popupVisible">
     <dxi-item>
       <div *ngFor="let systemPermission of dataSourceSystemPermission">
-        <dx-check-box [text]="systemPermission.name" [value]="valueCheck">
+        <dx-check-box [text]="systemPermission.name" [value]="getValuePermissionCheckBox(systemPermission)"
+          (onValueChanged)="permissionCheckBoxChange(systemPermission,$event.value)">
         </dx-check-box>
       </div>
     </dxi-item>

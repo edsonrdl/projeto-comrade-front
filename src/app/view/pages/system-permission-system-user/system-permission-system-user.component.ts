@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
 import { SystemUserModel } from 'src/app/core/models/system-user.model';
-import { GetAllSystemUserUsecase } from 'src/app/core/usecases/system-user/get-all-system-user.usecase';
-import dxPopup from 'devextreme/ui/popup';
 import { ModalService } from '../../components/modal/modal.service';
 import { SystemPermissionModel } from 'src/app/core/models/system-permission.model';
 import { GetAllSystemPermissionUsecase } from 'src/app/core/usecases/system-permission/get-all-system-permission.usecase';
@@ -22,7 +20,6 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   dataSourceSystemPermission!:SystemPermissionModel[];
   currentSystemUser!: SystemUserSystemPermissionsModel;  
   popupVisible = false;
-  valueCheck= false
   
   popup: any = {};
 
@@ -77,5 +74,26 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   }
   removePermissionFromCurrentUser(){
 
+  }
+  teste: boolean = true;
+  getValuePermissionCheckBox(permission:SystemPermissionModel): boolean {
+    //checar se permission existe no array do currentSystemUser.SystemPermissions
+
+      this.currentSystemUser.systemPermissions.push(permission);
+    
+    return this.teste;
+  }
+//  Const permissionTest=(permission)=>{
+//   if(currentSystemUser.systemPermissions.includes(permission)){
+//     permissionInclui=currentSystemUser.systemPermissions.indexOf (permission)
+//     return [permissionInclui]
+//   }
+//  }
+ 
+  permissionCheckBoxChange(permission:SystemPermissionModel, checkBoxValue:boolean) {
+    //adicionar ou remover permissao de array de acordo com o e.value
+    // console.log("permissionCheckBoxChange");    
+    console.log(permission);    
+    // console.log(checkBoxValue);    
   }
 }
