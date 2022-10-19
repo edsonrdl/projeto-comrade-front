@@ -55,7 +55,7 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   popUpInitialize(e: any){
     this.popup = e.component;
   }
-  InfoSystemUser(e:any) {
+  setCurrentSystemUser(e:any) {
     this.currentSystemUser = {...e.data};
     this.popupVisible = true;
   }

@@ -57,7 +57,7 @@ export class SystemRoleSystemUserComponent implements OnInit {
     console.log(e.component);
     this.popup = e.component;
   }
-  InfoSystemRole(e:any) {
+  setCurrentSystemRole(e:any) {
     this.selectedSystemRole = e.data;
     this.popupVisible = true;
   }
