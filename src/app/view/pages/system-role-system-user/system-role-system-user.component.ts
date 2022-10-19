@@ -20,7 +20,7 @@ export class SystemRoleSystemUserComponent implements OnInit {
   dataSource!: SystemUserModel[];
   dataSourceAux: any[] = [];
   dataSourceSystemRole!:SystemRoleModel[];
-  currentSystemUser!: SystemUserModel;  
+  currentSystemUser!: SystemUserSystemRolesModel;  
   popupVisible = false;
   selectedSystemRole!: SystemRoleModel[];
   
@@ -59,34 +59,7 @@ export class SystemRoleSystemUserComponent implements OnInit {
     console.log(e.component);
     this.popup = e.component;
   }
-  mockUserList(): void {
-    this.dataSourceAux = this.dataSource.map((u) => {
-      if (u.id == 'ec872b9a-484f-437f-2ec2-08da9b39d088') {
-        return {
-          ...u,
-          SystemRoles: [
-            {
-              id: '00480a40-e701-4ce5-a32f-08daa6f68310',
-              name: 'TEST1ROLE',
-            },
-          ],
-        };
-      } else {
-        return {
-          ...u,
-          SystemRoles: [
-            {
-              id: 'ff4128a4-7af3-48de-a330-08daa6f68310',
-              name: 'TEST2ROLE',
-            },
-          ],
-        };
-      }
-    });
-  }
-
-  showInfo(e:any) {
-    console.log(e.data);
+  InfoSystemRole(e:any) {
     this.selectedSystemRole = e.data;
     this.popupVisible = true;
   }
@@ -94,22 +67,45 @@ export class SystemRoleSystemUserComponent implements OnInit {
   
     this.modalService.close('modal-fechar');
   }
-  exemplo1(e:any){
-    console.log(e.value);
+ 
+  manageRoles(e: any): void {
+    const model =e.data  as SystemUserManageRolesModel;
+    this.manageRolesUsecase.execute(model).subscribe();
   }
 
-  exemplo2(systemRole: SystemRoleModel){
-    console.log(systemRole);
-  } 
-  getAllWithRoles(): void {
-    this.getAllWithRolesUsecase
-      .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<SystemUserSystemRolesModel>) => {
-        this.dataSource = grid.data ?? [];
-      });
+  getValueRoleCheckBox(role:SystemRoleModel): boolean {
+    let index = this.findIndexOfRoleInCurrentSystemRoles(role);
+    let existsInArray = index !== -1; 
+    return existsInArray;
   }
-  manageRoles(e: any): void {
-    const model = { ...e.oldData, ...e.newData } as SystemUserManageRolesModel;
-    this.manageRolesUsecase.execute(model).subscribe();
+
+  roleCheckBoxChange(role:SystemRoleModel, checkBoxValue:boolean) {
+    if(checkBoxValue) { 
+      this.addRoleInCurrentSystemUser(role);
+    } 
+    else {
+      this.removeRoleFromCurrentSystemUser(role);
+    }
+  }
+  addRoleInCurrentSystemUser(role:SystemRoleModel): void{
+    let addRole = this.findIndexOfRoleInCurrentSystemRoles(role);
+    if(addRole !== -1){
+      let userRoles = this.currentSystemUser?.systemRoles; 
+      userRoles?.push(role);
+    }
+  }
+
+  removeRoleFromCurrentSystemUser(role:SystemRoleModel): void{
+    let removeRole = this.findIndexOfRoleInCurrentSystemRoles(role);
+    if(removeRole === -1){
+      let userRoles = this.currentSystemUser?.systemRoles; 
+      userRoles?.splice(removeRole,1);
+    }
+  }
+
+  findIndexOfRoleInCurrentSystemRoles(role:SystemRoleModel): number | undefined{
+    let userRoles = this.currentSystemUser?.systemRoles; 
+    let index = userRoles?.findIndex(val => val.id == role.id);
+    return index;
   }
 }
