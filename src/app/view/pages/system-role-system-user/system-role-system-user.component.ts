@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
 import { SystemUserModel } from 'src/app/core/models/system-user.model';
-import { GetAllSystemUserUsecase } from 'src/app/core/usecases/system-user/get-all-system-user.usecase';
 import { ModalService } from '../../components/modal/modal.service';
 import { SystemRoleModel } from 'src/app/core/models/system-role.model';
 import { GetAllSystemRoleUsecase } from 'src/app/core/usecases/system-role/get-all-system-role.usecase';
@@ -27,7 +26,6 @@ export class SystemRoleSystemUserComponent implements OnInit {
   popup: any = {};
 
   constructor(
-    private getAllSystemUserUsecase: GetAllSystemUserUsecase,
     private getAllSystemRoleUsecase: GetAllSystemRoleUsecase,
     private modalService: ModalService,
     private getAllWithRolesUsecase: GetallwithRolesUsecase,
@@ -42,7 +40,7 @@ export class SystemRoleSystemUserComponent implements OnInit {
   }
 
   getAll(): void {
-    this.getAllSystemUserUsecase
+    this.getAllWithRolesUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<SystemUserModel>) => {
         this.dataSource = grid.data ?? [];
