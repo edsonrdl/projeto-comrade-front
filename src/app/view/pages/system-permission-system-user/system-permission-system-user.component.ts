@@ -18,7 +18,7 @@ import { SystemUserManagePermissionsModel } from 'src/app/core/models/system-use
 export class SystemPermissionSystemUserComponent implements OnInit {
   dataSource!: SystemUserModel[];
   dataSourceSystemPermission!:SystemPermissionModel[];
-  currentSystemUser!: SystemUserSystemPermissionsModel;  
+  currentSystemUser: SystemUserSystemPermissionsModel | undefined;  
   popupVisible = false;
   
   popup: any = {};
@@ -29,8 +29,7 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     private getAllWithPermissionsUsecase: GetAllWithPermissionsUsecase,
     private managePermissionsUsecase: ManagePermissionsUsecase,
     
-  ) {
-    
+  ) { 
   }
 
   ngOnInit(): void {
@@ -56,11 +55,12 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   popUpInitialize(e: any){
     this.popup = e.component;
   }
-  showInfo(e:any) {
+  InfoSystemUser(e:any) {
     this.currentSystemUser = {...e.data};
     this.popupVisible = true;
   }
   showClose() {
+    this.currentSystemUser = undefined;
     this.modalService.close('modal-fechar');
   }
  
@@ -69,31 +69,39 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     this.managePermissionsUsecase.execute(model).subscribe();
   }
 
-  addPermissionInCurrentUser() {
-
-  }
-  removePermissionFromCurrentUser(){
-
-  }
-  teste: boolean = true;
   getValuePermissionCheckBox(permission:SystemPermissionModel): boolean {
-    //checar se permission existe no array do currentSystemUser.SystemPermissions
-
-      this.currentSystemUser.systemPermissions.push(permission);
-    
-    return this.teste;
+    let index = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    let existsInArray = index !== -1; 
+    return existsInArray;
   }
-//  Const permissionTest=(permission)=>{
-//   if(currentSystemUser.systemPermissions.includes(permission)){
-//     permissionInclui=currentSystemUser.systemPermissions.indexOf (permission)
-//     return [permissionInclui]
-//   }
-//  }
- 
+
   permissionCheckBoxChange(permission:SystemPermissionModel, checkBoxValue:boolean) {
-    //adicionar ou remover permissao de array de acordo com o e.value
-    // console.log("permissionCheckBoxChange");    
-    console.log(permission);    
-    // console.log(checkBoxValue);    
+    if(checkBoxValue) { 
+      this.addPermissionInCurrentSystemUser(permission);
+    } 
+    else {
+      this.removePermissionFromCurrentSystemUser(permission);
+    }
+  }
+  addPermissionInCurrentSystemUser(permission:SystemPermissionModel): void{
+    let addPermissionm = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    if(addPermissionm !== -1){
+      let userPermissions = this.currentSystemUser?.systemPermissions; 
+      userPermissions?.push(permission);
+    }
+  }
+
+  removePermissionFromCurrentSystemUser(permission:SystemPermissionModel): void{
+    let removePermission = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    if(removePermission === -1){
+      let userPermissions = this.currentSystemUser?.systemPermissions; 
+      userPermissions?.splice(removePermission,1);
+    }
+  }
+
+  findIndexOfPermissionInCurrentSystemPermissions(permission:SystemPermissionModel): number | undefined{
+    let userPermissions = this.currentSystemUser?.systemPermissions; 
+    let index = userPermissions?.findIndex(val => val.id == permission.id);
+    return index;
   }
 }

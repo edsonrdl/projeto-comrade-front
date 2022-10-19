@@ -2,7 +2,7 @@
 <div>
 
 
-  <dx-data-grid [dataSource]="dataSource" (onRowClick)="showInfo($event)">
+  <dx-data-grid [dataSource]="dataSource" (onRowClick)="InfoSystemUser($event)">
     <dxo-paging [pageSize]="10"></dxo-paging>
     <dxo-filter-row [visible]="true"></dxo-filter-row>
     <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
@@ -14,7 +14,7 @@
   </dx-data-grid>
   <dx-popup [showTitle]="true" title="Information" [dragEnabled]="false" [hideOnOutsideClick]="true"
     [showCloseButton]="true" [(visible)]="popupVisible">
-    <dxi-item>
+    <dxi-item *ngIf="currentSystemUser">
       <div *ngFor="let systemPermission of dataSourceSystemPermission">
         <dx-check-box [text]="systemPermission.name" [value]="getValuePermissionCheckBox(systemPermission)"
           (onValueChanged)="permissionCheckBoxChange(systemPermission,$event.value)">
