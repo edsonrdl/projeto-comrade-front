@@ -10,7 +10,7 @@ import { SystemUserSystemRolesModel } from '../../models/system-user-system-role
 @Injectable({
   providedIn: 'root',
 })
-export class GetallwithRolesUsecase
+export class GetAllWithRolesUsecase
   implements UseCase<PageFilterModel, PageResultModel<SystemUserSystemRolesModel>>
 {
   constructor(private systemUserRepository: SystemUserRepository) {}

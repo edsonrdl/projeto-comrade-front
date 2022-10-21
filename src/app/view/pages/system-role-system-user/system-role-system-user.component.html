@@ -2,7 +2,7 @@
 <div>
 
 
-  <dx-data-grid [dataSource]="dataSource" (onRowClick)="showInfo($event)">
+  <dx-data-grid [dataSource]="dataSource" (onRowClick)="setCurrentSystemUser($event)">
     <dxo-paging [pageSize]="10"></dxo-paging>
     <dxo-filter-row [visible]="true"></dxo-filter-row>
     <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
@@ -14,17 +14,15 @@
   </dx-data-grid>
   <dx-popup [showTitle]="true" title="Information" [dragEnabled]="false" [hideOnOutsideClick]="true"
     [showCloseButton]="true" [(visible)]="popupVisible">
-
-
-    <dxi-item>
-      <div *ngFor="let role of dataSourceSystemRole">
-        <dx-check-box [text]="role.name" [value]="false" (onValueChanged)="exemplo1($event)"
-          (onValueChanged)="exemplo2(systemRole)">
+    <dxi-item *ngIf="currentSystemUser">
+      <div *ngFor="let systemRole of dataSourceSystemRole">
+        <dx-check-box [text]="systemRole.name" [value]="getValueRoleCheckBox(systemRole)"
+          (onValueChanged)="roleCheckBoxChange(systemRole,$event.value)">
         </dx-check-box>
       </div>
     </dxi-item>
-    <dxi-toolbar-item widget="dxButton" toolbar="bottom" location="after" [options]="closeButtonOptions">
-    </dxi-toolbar-item>
+    <dx-button class="save" text="Save" (onClick)="manageRoles()">
+    </dx-button>
   </dx-popup>
 
 </div>

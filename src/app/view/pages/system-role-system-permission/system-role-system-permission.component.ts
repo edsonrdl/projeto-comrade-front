@@ -89,11 +89,5 @@ export class SystemRoleSystemPermissionComponent implements OnInit {
 
     this.modalService.close('modal-fechar');
   }
-  exemplo1(e:any){
-    console.log(e.value);
-  }
-
-  exemplo2(systemPermission: SystemPermissionModel){
-    console.log(systemPermission);
-  }
+  
 }

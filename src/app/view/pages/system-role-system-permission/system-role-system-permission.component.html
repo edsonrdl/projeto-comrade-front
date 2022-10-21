@@ -18,8 +18,7 @@
 
     <dxi-item>
       <div *ngFor="let systemPermission of dataSourceSystemPermission">
-        <dx-check-box [text]="systemPermission.name" [value]="false" (onValueChanged)="exemplo1($event)"
-          (onValueChanged)="exemplo2(systemPermission)">
+        <dx-check-box [text]="systemPermission.name" [value]="false">
         </dx-check-box>
       </div>
     </dxi-item>

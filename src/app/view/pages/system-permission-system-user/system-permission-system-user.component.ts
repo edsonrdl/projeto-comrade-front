@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageResultModel } from 'src/app/core/utils/responses/page-result.model';
 import { SystemUserModel } from 'src/app/core/models/system-user.model';
-import { GetAllSystemUserUsecase } from 'src/app/core/usecases/system-user/get-all-system-user.usecase';
-import dxPopup from 'devextreme/ui/popup';
 import { ModalService } from '../../components/modal/modal.service';
 import { SystemPermissionModel } from 'src/app/core/models/system-permission.model';
 import { GetAllSystemPermissionUsecase } from 'src/app/core/usecases/system-permission/get-all-system-permission.usecase';
@@ -19,22 +17,19 @@ import { SystemUserManagePermissionsModel } from 'src/app/core/models/system-use
 })
 export class SystemPermissionSystemUserComponent implements OnInit {
   dataSource!: SystemUserModel[];
-  dataSourceAux: any[] = [];
   dataSourceSystemPermission!:SystemPermissionModel[];
-  currentSystemUser!: SystemUserModel;  
+  currentSystemUser: SystemUserSystemPermissionsModel | undefined;  
   popupVisible = false;
-  selectedSystemPermission!: SystemPermissionModel[];
   
   popup: any = {};
 
   constructor(
-    private getAllSystemUserUsecase: GetAllSystemUserUsecase,
     private getAllSystemPermissionUsecase: GetAllSystemPermissionUsecase,
     private modalService: ModalService,
     private getAllWithPermissionsUsecase: GetAllWithPermissionsUsecase,
     private managePermissionsUsecase: ManagePermissionsUsecase,
-  ) {
     
+  ) { 
   }
 
   ngOnInit(): void {
@@ -43,9 +38,9 @@ export class SystemPermissionSystemUserComponent implements OnInit {
   }
 
   getAll(): void {
-    this.getAllSystemUserUsecase
+    this.getAllWithPermissionsUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<SystemUserModel>) => {
+      .subscribe((grid: PageResultModel<SystemUserSystemPermissionsModel>) => {
         this.dataSource = grid.data ?? [];
       });
   }
@@ -53,69 +48,74 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     this.getAllSystemPermissionUsecase
       .execute({ pageSize: 20, pageNumber: 1 })
       .subscribe((grid: PageResultModel<SystemPermissionModel>) => {
-        console.log(grid.data);
         this.dataSourceSystemPermission = grid.data ?? [];
       });
   }
 
   popUpInitialize(e: any){
-    console.log(e.component);
     this.popup = e.component;
   }
-
-  mockUserList(): void {
-    this.dataSourceAux = this.dataSource.map((u) => {
-      if (u.id == 'ec872b9a-484f-437f-2ec2-08da9b39d088') {
-        return {
-          ...u,
-          SystemPermissions: [
-            {
-              id: '81696b17-7854-4967-4a9d-08da9687d7e8',
-              name: 'JUSEUS',
-            },
-          ],
-        };
-      } else {
-        return {
-          ...u,
-          SystemPermissions: [
-            {
-              id: 'c22bcadf-ccd3-44af-c8b2-08da968ca774',
-              name: 'ABELL',
-            },
-          ],
-        };
-      }
-    });
-  }
-
-  showInfo(e:any) {
-    console.log(e.data);
-    this.selectedSystemPermission = e.data;
+  setCurrentSystemUser(e:any) {
+    this.currentSystemUser = {...e.data};
     this.popupVisible = true;
   }
   showClose() {
-  
+    this.currentSystemUser = undefined;
     this.modalService.close('modal-fechar');
-  } 
+  }
+  managePermissions(): void {
+    let manageSystemUser = this.getManagerSystemUser();
+    this.managePermissionsUsecase.execute(manageSystemUser).subscribe();
+  }
+  getManagerSystemUser() : SystemUserManagePermissionsModel {
+    let currentUserId = this.currentSystemUser?.id;
+    currentUserId = currentUserId ? currentUserId : "";
 
-  exemplo1(e:any){
-    console.log(e.value);
+    let permissionIds = this.currentSystemUser?.systemPermissions.map(permission => {
+      return permission.id ? permission.id : ""
+    });
+
+    permissionIds = permissionIds ? permissionIds : [];
+
+    let result: SystemUserManagePermissionsModel = {
+      id: currentUserId,
+      systemPermissionIds: permissionIds
+    }
+    return result;
+  }
+  getValuePermissionCheckBox(permission:SystemPermissionModel): boolean {
+    let index = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    let existsInArray = index !== -1; 
+    return existsInArray;
   }
 
-  exemplo2(systemPermission: SystemPermissionModel){
-    console.log(systemPermission);
+  permissionCheckBoxChange(permission:SystemPermissionModel, checkBoxValue:boolean) {
+    if(checkBoxValue) { 
+      this.addPermissionInCurrentSystemUser(permission);
+    } 
+    else {
+      this.removePermissionFromCurrentSystemUser(permission);
+    }
   }
-  getAllWithPermissions(): void {
-    this.getAllWithPermissionsUsecase
-      .execute({ pageSize: 20, pageNumber: 1 })
-      .subscribe((grid: PageResultModel<SystemUserSystemPermissionsModel>) => {
-        this.dataSource = grid.data ?? [];
-      });
+  addPermissionInCurrentSystemUser(permission:SystemPermissionModel): void{
+    let addPermission = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    if(addPermission === -1){
+      let userPermissions = this.currentSystemUser?.systemPermissions; 
+      userPermissions?.push(permission);
+    }
   }
-  managePermissions(e: any): void {
-    console.log(e);
-    const model = { ...e.oldData, ...e.newData } as SystemUserManagePermissionsModel;
-    this.managePermissionsUsecase.execute(model).subscribe();
+
+  removePermissionFromCurrentSystemUser(permission:SystemPermissionModel): void{
+    let removePermission = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    if(removePermission!==undefined && removePermission !== -1){
+      let userPermissions = this.currentSystemUser?.systemPermissions; 
+      userPermissions?.splice(removePermission,1);
+    }
+  }
+
+  findIndexOfPermissionInCurrentSystemPermissions(permission:SystemPermissionModel): number | undefined{
+    let userPermissions = this.currentSystemUser?.systemPermissions; 
+    let index = userPermissions?.findIndex(val => val.id == permission.id);
+    return index;
   }
 }

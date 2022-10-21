@@ -1,5 +1,5 @@
 export interface SystemUserManagePermissionsWebEntity {
   id: String;
-  systemPermissions: String[];
+  systemPermissionIds: String[];
 }
 
