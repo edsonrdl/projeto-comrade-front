@@ -63,12 +63,26 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     this.currentSystemUser = undefined;
     this.modalService.close('modal-fechar');
   }
- 
-  managePermissions(e: any): void {
-    const model =e.data  as SystemUserManagePermissionsModel;
-    this.managePermissionsUsecase.execute(model).subscribe();
+  managePermissions(): void {
+    let manageSystemUser = this.getManagerSystemUser();
+    this.managePermissionsUsecase.execute(manageSystemUser).subscribe();
   }
+  getManagerSystemUser() : SystemUserManagePermissionsModel {
+    let currentUserId = this.currentSystemUser?.id;
+    currentUserId = currentUserId ? currentUserId : "";
 
+    let permissionIds = this.currentSystemUser?.systemPermissions.map(permission => {
+      return permission.id ? permission.id : ""
+    });
+
+    permissionIds = permissionIds ? permissionIds : [];
+
+    let result: SystemUserManagePermissionsModel = {
+      id: currentUserId,
+      systemPermissionIds: permissionIds
+    }
+    return result;
+  }
   getValuePermissionCheckBox(permission:SystemPermissionModel): boolean {
     let index = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
     let existsInArray = index !== -1; 
@@ -84,8 +98,8 @@ export class SystemPermissionSystemUserComponent implements OnInit {
     }
   }
   addPermissionInCurrentSystemUser(permission:SystemPermissionModel): void{
-    let addPermissionm = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
-    if(addPermissionm !== -1){
+    let addPermission = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
+    if(addPermission === -1){
       let userPermissions = this.currentSystemUser?.systemPermissions; 
       userPermissions?.push(permission);
     }
@@ -93,7 +107,7 @@ export class SystemPermissionSystemUserComponent implements OnInit {
 
   removePermissionFromCurrentSystemUser(permission:SystemPermissionModel): void{
     let removePermission = this.findIndexOfPermissionInCurrentSystemPermissions(permission);
-    if(removePermission === -1){
+    if(removePermission!==undefined && removePermission !== -1){
       let userPermissions = this.currentSystemUser?.systemPermissions; 
       userPermissions?.splice(removePermission,1);
     }
