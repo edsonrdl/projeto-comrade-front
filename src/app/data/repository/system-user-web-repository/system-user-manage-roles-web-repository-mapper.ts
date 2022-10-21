@@ -6,14 +6,14 @@ export class SystemUserManageRolesWebRepositoryMapper extends Mapper<SystemUserM
   mapFrom(param: SystemUserManageRolesWebEntity): SystemUserManageRolesModel {
     return {
       id: param.id,
-      systemRoles: param.systemRoles      
+      systemRoleIds: param.systemRoleIds      
     };
   }
 
   mapTo(param: SystemUserManageRolesModel): SystemUserManageRolesWebEntity {
     return {
       id: param.id,
-      systemRoles: param.systemRoles 
+      systemRoleIds: param.systemRoleIds 
     };
   }
 }
